@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#5b8def">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Forge">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Forge — Adaptive Strength Training</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <!-- Onboarding Screen -->
+    <section id="onboarding" class="screen active">
+      <div class="container narrow">
+        <div class="logo">FORGE</div>
+        <h1>Build your adaptive plan</h1>
+        <p class="subtitle">Personalized strength training that progresses with you.</p>
+
+        <form id="onboarding-form">
+          <div class="form-group">
+            <label>What's your main goal?</label>
+            <div class="option-grid" data-name="goal">
+              <button type="button" class="option" data-value="muscle">Build Muscle</button>
+              <button type="button" class="option" data-value="strength">Get Stronger</button>
+              <button type="button" class="option" data-value="fitness">General Fitness</button>
+              <button type="button" class="option" data-value="fatloss">Lose Fat</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Experience level</label>
+            <div class="option-grid" data-name="experience">
+              <button type="button" class="option" data-value="beginner">Beginner</button>
+              <button type="button" class="option" data-value="intermediate">Intermediate</button>
+              <button type="button" class="option" data-value="advanced">Advanced</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Where do you train?</label>
+            <div class="option-grid" data-name="equipment">
+              <button type="button" class="option" data-value="gym">Full Gym</button>
+              <button type="button" class="option" data-value="home">Home / Minimal</button>
+              <button type="button" class="option" data-value="mixed">Mixed</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Days per week</label>
+            <div class="option-grid days" data-name="days">
+              <button type="button" class="option" data-value="3">3</button>
+              <button type="button" class="option" data-value="4">4</button>
+              <button type="button" class="option" data-value="5">5</button>
+              <button type="button" class="option" data-value="6">6</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn primary" id="generate-btn" disabled>Generate My Plan</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Dashboard Screen -->
+    <section id="dashboard" class="screen">
+      <header class="topbar">
+        <div class="logo small">FORGE</div>
+        <nav>
+          <button class="nav-btn active" data-view="plan">Plan</button>
+          <button class="nav-btn" data-view="workout">Workout</button>
+          <button class="nav-btn" data-view="progress">Progress</button>
+          <button class="nav-btn" data-view="library">Library</button>
+        </nav>
+      </header>
+
+      <main class="container">
+        <!-- Plan View -->
+        <div id="view-plan" class="view active">
+          <div class="plan-header">
+            <div>
+              <h2 id="plan-title">Your Plan</h2>
+              <p id="plan-meta" class="meta"></p>
+            </div>
+            <button class="btn secondary small" id="reset-plan">New Plan</button>
+          </div>
+
+          <div id="week-overview" class="week-grid"></div>
+
+          <div class="card tip">
+            <strong>How it works:</strong> Complete workouts in order. Weights auto-progress based on your performance. Miss a day? Just continue — the plan flexes with you.
+          </div>
+        </div>
+
+        <!-- Workout View -->
+        <div id="view-workout" class="view">
+          <div id="active-workout">
+            <h2 id="workout-title">Today's Workout</h2>
+            <p id="workout-subtitle" class="meta"></p>
+            <div id="exercise-list"></div>
+            <button class="btn primary full" id="finish-workout" style="display:none;">Finish Workout</button>
+          </div>
+          <div id="no-workout" class="empty-state" style="display:none;">
+            <p>No active workout. Go to Plan and start one.</p>
+          </div>
+        </div>
+
+        <!-- Progress View -->
+        <div id="view-progress" class="view">
+          <h2>Progress</h2>
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-value" id="stat-workouts">0</div>
+              <div class="stat-label">Workouts</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-volume">0</div>
+              <div class="stat-label">Total Volume (kg)</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-prs">0</div>
+              <div class="stat-label">PRs</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Recent Workouts</h3>
+            <div id="history-list"></div>
+          </div>
+          <div class="card">
+            <h3>Personal Records</h3>
+            <div id="pr-list"></div>
+          </div>
+        </div>
+
+        <!-- Library View -->
+        <div id="view-library" class="view">
+          <h2>Exercise Library</h2>
+          <div class="search-bar">
+            <input type="text" id="library-search" placeholder="Search exercises...">
+          </div>
+          <div class="filter-row">
+            <button class="chip active" data-muscle="all">All</button>
+            <button class="chip" data-muscle="chest">Chest</button>
+            <button class="chip" data-muscle="back">Back</button>
+            <button class="chip" data-muscle="legs">Legs</button>
+            <button class="chip" data-muscle="shoulders">Shoulders</button>
+            <button class="chip" data-muscle="arms">Arms</button>
+            <button class="chip" data-muscle="core">Core</button>
+          </div>
+          <div id="library-list" class="library-grid"></div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <!-- Exercise Detail Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <h2 id="modal-title"></h2>
+      <p id="modal-muscle" class="meta"></p>
+      <p id="modal-desc"></p>
+      <div class="form-cues">
+        <h4>Form Cues</h4>
+        <ul id="modal-cues"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
