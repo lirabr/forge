@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&display=swap" rel="stylesheet"><style>body{margin:0;background:#26282d;font-family:Inter,system-ui,sans-serif}a{color:#5b8def}a:hover{color:#94bce3}</style></helmet>
+<div style="padding:44px 48px 64px;color:#f0f2f5">
+  <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+    <span style="font:600 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;padding:5px 8px;background:#0f1115;border:1px solid #2e333d;color:#9aa3b2">BASELINE</span>
+    <h1 style="margin:0;font:600 30px/1 'Barlow Condensed',sans-serif;letter-spacing:.01em">Forge as it exists today</h1>
+  </div>
+  <p style="max-width:760px;margin:0 0 34px;font-size:14px;line-height:1.6;color:#9aa3b2">Recreated from <code style="font-family:ui-monospace,Menlo,monospace;color:#94bce3">index.html</code>, <code style="font-family:ui-monospace,Menlo,monospace;color:#94bce3">styles.css</code> and <code style="font-family:ui-monospace,Menlo,monospace;color:#94bce3">app.js</code> at 390px — the mobile breakpoint the CSS switches to at 600px. Every value here is lifted from the repo: <code style="font-family:ui-monospace,Menlo,monospace;color:#94bce3">#0f1115</code> ground, <code style="font-family:ui-monospace,Menlo,monospace;color:#94bce3">#5b8def</code> primary, Inter, 12px/8px radii. No icons, no imagery, no motion — this is the gap the design system fills.</p>
+
+  <div style="display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap">
+
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9aa3b2">01 · #onboarding</div>
+      <div style="width:390px;background:#0f1115;border:1px solid #3a3f49;overflow:hidden">
+        <div style="max-width:520px;margin:0 auto;padding:60px 20px 80px">
+          <div style="font-weight:700;font-size:28px;letter-spacing:.08em;color:#5b8def;margin-bottom:24px">FORGE</div>
+          <h1 style="font-size:28px;font-weight:700;margin:0 0 8px;line-height:1.5">Build your adaptive plan</h1>
+          <p style="color:#9aa3b2;margin:0 0 32px;line-height:1.5">Personalized strength training that progresses with you.</p>
+          <div style="margin-bottom:28px">
+            <label style="display:block;font-weight:500;margin-bottom:10px;font-size:15.2px">What's your main goal?</label>
+            <div style="display:grid;grid-template-columns:1fr;gap:10px">
+              <button style="background:rgba(91,141,239,.15);border:1.5px solid #5b8def;color:#5b8def;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif;text-align:center">Build Muscle</button>
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif;text-align:center">Get Stronger</button>
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif;text-align:center">General Fitness</button>
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif;text-align:center">Lose Fat</button>
+            </div>
+          </div>
+          <div style="margin-bottom:28px">
+            <label style="display:block;font-weight:500;margin-bottom:10px;font-size:15.2px">Experience level</label>
+            <div style="display:grid;grid-template-columns:1fr;gap:10px">
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif">Beginner</button>
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif">Intermediate</button>
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif">Advanced</button>
+            </div>
+          </div>
+          <div style="margin-bottom:28px">
+            <label style="display:block;font-weight:500;margin-bottom:10px;font-size:15.2px">Days per week</label>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif">3</button>
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif">4</button>
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif">5</button>
+              <button style="background:#1a1d24;border:1.5px solid #2e333d;color:#f0f2f5;padding:14px 12px;border-radius:8px;font:500 15.2px Inter,sans-serif">6</button>
+            </div>
+          </div>
+          <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:8px;font:600 16px Inter,sans-serif;background:#5b8def;color:#fff;width:100%;margin-top:8px;border:none;opacity:.45">Generate My Plan</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9aa3b2">02 · #view-plan</div>
+      <div style="width:390px;background:#0f1115;border:1px solid #3a3f49;overflow:hidden">
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:16px 20px;background:#1a1d24;border-bottom:1px solid #2e333d">
+          <div style="font-weight:700;font-size:20px;letter-spacing:.08em;color:#5b8def">FORGE</div>
+          <div style="display:flex;gap:4px;width:100%;overflow-x:auto">
+            <button style="background:rgba(91,141,239,.12);border:none;color:#5b8def;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif;flex:none">Plan</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif;flex:none">Workout</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif;flex:none">Progress</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif;flex:none">Library</button>
+          </div>
+        </div>
+        <div style="padding:24px 20px 80px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;gap:12px">
+            <div>
+              <h2 style="font-size:21.6px;font-weight:600;margin:0 0 8px;line-height:1.5">Muscle • 4 days/week</h2>
+              <p style="color:#9aa3b2;font-size:14.4px;margin:0">Intermediate • Gym equipment</p>
+            </div>
+            <button style="background:#242830;color:#f0f2f5;border:1px solid #2e333d;padding:8px 14px;border-radius:8px;font:600 13.6px Inter,sans-serif;flex:none">New Plan</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px">
+            <div style="background:#1a1d24;border:1px solid #5b8def;box-shadow:0 0 0 1px #5b8def;border-radius:12px;padding:16px 18px">
+              <div style="font-weight:600;margin-bottom:4px">Day 1: Upper A</div>
+              <div style="color:#9aa3b2;font-size:14.4px">Upper Body • 6 exercises</div>
+            </div>
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:16px 18px">
+              <div style="font-weight:600;margin-bottom:4px">Day 2: Lower A</div>
+              <div style="color:#9aa3b2;font-size:14.4px">Lower Body • 5 exercises</div>
+            </div>
+            <div style="background:#1a1d24;border:1px solid #3dd68c;border-radius:12px;padding:16px 18px;opacity:.85">
+              <div style="font-weight:600;margin-bottom:4px">Day 3: Upper B</div>
+              <div style="color:#9aa3b2;font-size:14.4px">Upper Body • 6 exercises</div>
+              <div style="font-size:12.8px;margin-top:8px;color:#3dd68c">✓ Completed</div>
+            </div>
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:16px 18px">
+              <div style="font-weight:600;margin-bottom:4px">Day 4: Lower B</div>
+              <div style="color:#9aa3b2;font-size:14.4px">Lower Body • 5 exercises</div>
+            </div>
+          </div>
+          <div style="background:rgba(91,141,239,.08);border:1px solid rgba(91,141,239,.25);border-radius:12px;padding:18px 20px;font-size:14.4px;color:#9aa3b2;line-height:1.5"><strong style="color:#5b8def">How it works:</strong> Complete workouts in order. Weights auto-progress based on your performance. Miss a day? Just continue — the plan flexes with you.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9aa3b2">03 · #view-workout</div>
+      <div style="width:390px;background:#0f1115;border:1px solid #3a3f49;overflow:hidden">
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:16px 20px;background:#1a1d24;border-bottom:1px solid #2e333d">
+          <div style="font-weight:700;font-size:20px;letter-spacing:.08em;color:#5b8def">FORGE</div>
+          <div style="display:flex;gap:4px;width:100%">
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Plan</button>
+            <button style="background:rgba(91,141,239,.12);border:none;color:#5b8def;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Workout</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Progress</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Library</button>
+          </div>
+        </div>
+        <div style="padding:24px 20px 80px">
+          <h2 style="font-size:21.6px;font-weight:600;margin:0 0 8px;line-height:1.5">Upper A</h2>
+          <p style="color:#9aa3b2;font-size:14.4px;margin:0 0 16px">Upper Body</p>
+          <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:16px 18px;margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div>
+                <div style="font-weight:600">Barbell Bench Press</div>
+                <div style="font-size:13.6px;color:#9aa3b2">chest • 3 sets × 6-10 reps</div>
+              </div>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:14.4px">
+              <thead><tr><th style="text-align:left;color:#9aa3b2;font-weight:500;padding:4px 8px 8px 0;font-size:12.8px">Set</th><th style="text-align:left;color:#9aa3b2;font-weight:500;padding:4px 8px 8px 0;font-size:12.8px">Weight</th><th style="text-align:left;color:#9aa3b2;font-weight:500;padding:4px 8px 8px 0;font-size:12.8px">Reps</th><th style="text-align:left;color:#9aa3b2;font-weight:500;padding:4px 8px 8px 0;font-size:12.8px">✓</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:6px 8px 6px 0">1</td><td style="padding:6px 8px 6px 0"><input type="number" value="41" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="number" value="6" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="checkbox" checked style="width:22px;height:22px;accent-color:#3dd68c"></td></tr>
+                <tr><td style="padding:6px 8px 6px 0">2</td><td style="padding:6px 8px 6px 0"><input type="number" value="41" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="number" value="6" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="checkbox" style="width:22px;height:22px;accent-color:#3dd68c"></td></tr>
+                <tr><td style="padding:6px 8px 6px 0">3</td><td style="padding:6px 8px 6px 0"><input type="number" value="41" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="number" value="6" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="checkbox" style="width:22px;height:22px;accent-color:#3dd68c"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:16px 18px;margin-bottom:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div>
+                <div style="font-weight:600">Barbell Row</div>
+                <div style="font-size:13.6px;color:#9aa3b2">back • 3 sets × 6-10 reps</div>
+              </div>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:14.4px">
+              <thead><tr><th style="text-align:left;color:#9aa3b2;font-weight:500;padding:4px 8px 8px 0;font-size:12.8px">Set</th><th style="text-align:left;color:#9aa3b2;font-weight:500;padding:4px 8px 8px 0;font-size:12.8px">Weight</th><th style="text-align:left;color:#9aa3b2;font-weight:500;padding:4px 8px 8px 0;font-size:12.8px">Reps</th><th style="text-align:left;color:#9aa3b2;font-weight:500;padding:4px 8px 8px 0;font-size:12.8px">✓</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:6px 8px 6px 0">1</td><td style="padding:6px 8px 6px 0"><input type="number" value="40" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="number" value="6" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="checkbox" style="width:22px;height:22px;accent-color:#3dd68c"></td></tr>
+                <tr><td style="padding:6px 8px 6px 0">2</td><td style="padding:6px 8px 6px 0"><input type="number" value="40" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="number" value="6" style="width:70px;background:#242830;border:1px solid #2e333d;border-radius:6px;color:#f0f2f5;padding:6px 8px;font:14.4px Inter,sans-serif"></td><td style="padding:6px 8px 6px 0"><input type="checkbox" style="width:22px;height:22px;accent-color:#3dd68c"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <button style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border-radius:8px;font:600 16px Inter,sans-serif;background:#5b8def;color:#fff;width:100%;margin-top:20px;border:none">Finish Workout</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9aa3b2">04 · #view-progress</div>
+      <div style="width:390px;background:#0f1115;border:1px solid #3a3f49;overflow:hidden">
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:16px 20px;background:#1a1d24;border-bottom:1px solid #2e333d">
+          <div style="font-weight:700;font-size:20px;letter-spacing:.08em;color:#5b8def">FORGE</div>
+          <div style="display:flex;gap:4px;width:100%">
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Plan</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Workout</button>
+            <button style="background:rgba(91,141,239,.12);border:none;color:#5b8def;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Progress</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Library</button>
+          </div>
+        </div>
+        <div style="padding:24px 20px 80px">
+          <h2 style="font-size:21.6px;font-weight:600;margin:0 0 8px;line-height:1.5">Progress</h2>
+          <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:24px">
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:18px;text-align:center">
+              <div style="font-size:25.6px;font-weight:700;color:#5b8def">14</div>
+              <div style="font-size:12.8px;color:#9aa3b2;margin-top:4px">Workouts</div>
+            </div>
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:18px;text-align:center">
+              <div style="font-size:25.6px;font-weight:700;color:#5b8def">38,420</div>
+              <div style="font-size:12.8px;color:#9aa3b2;margin-top:4px">Total Volume (kg)</div>
+            </div>
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:18px;text-align:center">
+              <div style="font-size:25.6px;font-weight:700;color:#5b8def">9</div>
+              <div style="font-size:12.8px;color:#9aa3b2;margin-top:4px">PRs</div>
+            </div>
+          </div>
+          <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:18px 20px;margin-bottom:16px">
+            <h3 style="font-size:16.8px;font-weight:600;margin:0 0 12px">Recent Workouts</h3>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2e333d;font-size:15.2px">
+                <div><strong>Upper B</strong><div style="color:#9aa3b2;font-size:14.4px">2026-09-04 • Upper Body</div></div>
+                <div>3,140 kg</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2e333d;font-size:15.2px">
+                <div><strong>Lower A</strong><div style="color:#9aa3b2;font-size:14.4px">2026-09-02 • Lower Body</div></div>
+                <div>4,880 kg</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;font-size:15.2px">
+                <div><strong>Upper A</strong><div style="color:#9aa3b2;font-size:14.4px">2026-08-31 • Upper Body</div></div>
+                <div>2,960 kg</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:18px 20px">
+            <h3 style="font-size:16.8px;font-weight:600;margin:0 0 12px">Personal Records</h3>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #2e333d;font-size:15.2px">
+                <div><strong>Barbell Back Squat</strong><div style="color:#9aa3b2;font-size:14.4px">2026-09-02</div></div>
+                <div>110 kg × 6</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;font-size:15.2px">
+                <div><strong>Barbell Bench Press</strong><div style="color:#9aa3b2;font-size:14.4px">2026-08-31</div></div>
+                <div>80 kg × 8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9aa3b2">05 · #view-library + #modal</div>
+      <div style="width:390px;background:#0f1115;border:1px solid #3a3f49;overflow:hidden;position:relative">
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:16px 20px;background:#1a1d24;border-bottom:1px solid #2e333d">
+          <div style="font-weight:700;font-size:20px;letter-spacing:.08em;color:#5b8def">FORGE</div>
+          <div style="display:flex;gap:4px;width:100%">
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Plan</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Workout</button>
+            <button style="background:transparent;border:none;color:#9aa3b2;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Progress</button>
+            <button style="background:rgba(91,141,239,.12);border:none;color:#5b8def;padding:8px 14px;border-radius:6px;font:500 14.4px Inter,sans-serif">Library</button>
+          </div>
+        </div>
+        <div style="padding:24px 20px 80px">
+          <h2 style="font-size:21.6px;font-weight:600;margin:0 0 8px;line-height:1.5">Exercise Library</h2>
+          <div style="margin-bottom:14px">
+            <input placeholder="Search exercises..." style="width:100%;background:#1a1d24;border:1px solid #2e333d;border-radius:8px;padding:12px 14px;color:#f0f2f5;font:15.2px Inter,sans-serif">
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+            <button style="background:rgba(91,141,239,.15);border:1px solid #5b8def;color:#5b8def;padding:6px 14px;border-radius:20px;font:500 13.6px Inter,sans-serif">All</button>
+            <button style="background:#1a1d24;border:1px solid #2e333d;color:#9aa3b2;padding:6px 14px;border-radius:20px;font:500 13.6px Inter,sans-serif">Chest</button>
+            <button style="background:#1a1d24;border:1px solid #2e333d;color:#9aa3b2;padding:6px 14px;border-radius:20px;font:500 13.6px Inter,sans-serif">Back</button>
+            <button style="background:#1a1d24;border:1px solid #2e333d;color:#9aa3b2;padding:6px 14px;border-radius:20px;font:500 13.6px Inter,sans-serif">Legs</button>
+            <button style="background:#1a1d24;border:1px solid #2e333d;color:#9aa3b2;padding:6px 14px;border-radius:20px;font:500 13.6px Inter,sans-serif">Shoulders</button>
+            <button style="background:#1a1d24;border:1px solid #2e333d;color:#9aa3b2;padding:6px 14px;border-radius:20px;font:500 13.6px Inter,sans-serif">Arms</button>
+            <button style="background:#1a1d24;border:1px solid #2e333d;color:#9aa3b2;padding:6px 14px;border-radius:20px;font:500 13.6px Inter,sans-serif">Core</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr;gap:10px">
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:8px;padding:14px 16px"><div style="font-weight:600;margin-bottom:2px">Barbell Bench Press</div><div style="font-size:12.8px;color:#9aa3b2">Chest • gym</div></div>
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:8px;padding:14px 16px"><div style="font-weight:600;margin-bottom:2px">Dumbbell Bench Press</div><div style="font-size:12.8px;color:#9aa3b2">Chest • mixed</div></div>
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:8px;padding:14px 16px"><div style="font-weight:600;margin-bottom:2px">Push-Up</div><div style="font-size:12.8px;color:#9aa3b2">Chest • home</div></div>
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:8px;padding:14px 16px"><div style="font-weight:600;margin-bottom:2px">Overhead Press</div><div style="font-size:12.8px;color:#9aa3b2">Shoulders • gym</div></div>
+            <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:8px;padding:14px 16px"><div style="font-weight:600;margin-bottom:2px">Lat Pulldown</div><div style="font-size:12.8px;color:#9aa3b2">Back • gym</div></div>
+          </div>
+        </div>
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;padding:20px">
+          <div style="background:#1a1d24;border:1px solid #2e333d;border-radius:12px;padding:28px;max-width:440px;width:100%;position:relative">
+            <button style="position:absolute;top:12px;right:16px;background:none;border:none;color:#9aa3b2;font-size:24px;line-height:1">×</button>
+            <h2 style="font-size:21.6px;font-weight:600;margin:0 0 8px;line-height:1.5">Barbell Bench Press</h2>
+            <p style="color:#9aa3b2;font-size:14.4px;margin:0 0 10px">Chest • gym</p>
+            <p style="margin:0 0 10px;line-height:1.5">Classic horizontal pressing movement for chest, shoulders and triceps.</p>
+            <div style="margin-top:16px">
+              <h4 style="font-size:14.4px;margin:0 0 8px;color:#9aa3b2;font-weight:600">Form Cues</h4>
+              <ul style="padding-left:18px;font-size:14.4px;color:#9aa3b2;margin:0">
+                <li style="margin-bottom:4px">Retract scapula and keep feet planted</li>
+                <li style="margin-bottom:4px">Lower bar to mid-chest with control</li>
+                <li style="margin-bottom:4px">Press up explosively without bouncing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:40px;max-width:820px;border-top:1px solid #3a3f49;padding-top:22px">
+    <div style="font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;color:#9aa3b2;margin-bottom:10px">WHAT'S MISSING</div>
+    <ul style="margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:#9aa3b2">
+      <li>No icons anywhere — the tab bar, the set checkboxes and the modal close are all raw text or native controls.</li>
+      <li>No exercise imagery or muscle-group identity; every card in the library looks the same.</li>
+      <li>Everything is one surface at one elevation, so the active day, a logged set and a PR read at the same weight.</li>
+      <li>Native <code style="font-family:ui-monospace,Menlo,monospace">number</code> inputs and a <code style="font-family:ui-monospace,Menlo,monospace">&lt;table&gt;</code> for set logging — 22px tap targets, well under the 44px minimum.</li>
+      <li>No rest timer, no completion moment, no chart — the progress view is three numbers and two lists.</li>
+      <li>Top nav in a sticky bar; on mobile it collapses into a horizontally scrolling row.</li>
+    </ul>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>
