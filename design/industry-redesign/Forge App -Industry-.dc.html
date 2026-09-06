@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="_ds/industry-6b60a1a5-f4c1-4fe5-9afe-5bb33b66b9e4/styles.css"><script src="_ds/industry-6b60a1a5-f4c1-4fe5-9afe-5bb33b66b9e4/_ds_bundle.js"></script><style>*{box-sizing:border-box}body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}button{font-family:inherit}::-webkit-scrollbar{width:0}a{color:var(--color-accent)}a:hover{color:var(--color-accent-700)}@keyframes rise{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}@keyframes snap{0%{transform:scale(.94);opacity:0}60%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}</style></helmet>
+
+<div style="display:flex;gap:38px;align-items:flex-start;padding:44px 40px 64px;flex-wrap:wrap">
+
+  <div style="width:216px;flex:none;position:sticky;top:44px">
+    <div style="font:600 20px/1 var(--font-heading);letter-spacing:.14em;color:var(--color-accent);margin-bottom:4px">FORGE</div>
+    <div style="font:11px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:22px">INDUSTRY SYSTEM · 9 SCREENS</div>
+    <div style="border-top:1px solid var(--color-divider)">
+      <sc-for list="{{ rail }}" as="r" hint-placeholder-count="9">
+        <button onClick="{{ r.go }}" style="width:100%;text-align:left;display:flex;align-items:center;gap:10px;padding:11px 10px;background:{{ r.bg }};border:none;border-bottom:1px solid var(--color-divider);cursor:pointer" style-hover="background:var(--color-surface)">
+          <span style="font:500 10px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:{{ r.num }}">{{ r.n }}</span>
+          <span style="font:600 14px/1.1 var(--font-heading);letter-spacing:.05em;text-transform:uppercase;color:{{ r.fg }}">{{ r.label }}</span>
+        </button>
+      </sc-for>
+    </div>
+    <p style="margin:20px 0 0;font:12px/1.6 var(--font-body);color:color-mix(in srgb,var(--color-text) 55%,transparent)">Every screen is live — pick options, log sets, run the rest timer, filter the library. Nav pattern, rest length and units are tweakable.</p>
+  </div>
+
+  <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" dark="{{ false }}" hint-size="402px,874px">
+    <div style="height:100%;display:flex;flex-direction:column;background:var(--color-bg);position:relative;overflow:hidden">
+
+      <sc-if value="{{ navTop }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:none;padding:62px 16px 0;background:var(--color-bg);border-bottom:1px solid var(--color-divider)">
+          <div style="display:flex;align-items:center;gap:12px;padding:8px 0 6px">
+            <div style="font:600 18px/1 var(--font-heading);letter-spacing:.14em;color:var(--color-accent)">FORGE</div>
+            <div style="flex:1;display:flex;gap:0;justify-content:flex-end">
+              <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+                <button onClick="{{ t.go }}" style="padding:8px 10px;background:{{ t.bg }};border:none;border-bottom:2px solid {{ t.rule }};font:600 12.5px var(--font-heading);letter-spacing:.08em;color:{{ t.fg }};cursor:pointer">{{ t.short }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="flex:1;overflow-y:auto;padding:{{ scrollPad }}">
+
+        <sc-if value="{{ isOnboard }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:0 20px 32px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:26px">
+              <div style="position:relative;width:30px;height:30px;background:var(--color-accent);display:flex;align-items:center;justify-content:center;flex:none">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z"/><path d="m2.5 21.5 1.4-1.4"/><path d="m20.1 3.9 1.4-1.4"/><path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z"/><path d="m9.6 14.4 4.8-4.8"/></svg>
+              </div>
+              <div style="font:600 19px/1 var(--font-heading);letter-spacing:.14em">FORGE</div>
+              <div style="flex:1"></div>
+              <div style="font:500 10px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ obStepLabel }}</div>
+            </div>
+            <div style="display:flex;gap:4px;margin-bottom:30px">
+              <sc-for list="{{ obBars }}" as="b" hint-placeholder-count="4">
+                <div style="flex:1;height:2px;background:{{ b.bg }}"></div>
+              </sc-for>
+            </div>
+            <h1 style="margin:0 0 6px;font:600 33px/1.05 var(--font-heading);text-transform:uppercase">{{ obTitle }}</h1>
+            <p style="margin:0 0 26px;font:14px/1.55 var(--font-body);color:color-mix(in srgb,var(--color-text) 68%,transparent)">{{ obSub }}</p>
+            <div style="display:grid;grid-template-columns:{{ obCols }};gap:10px;margin-bottom:28px">
+              <sc-for list="{{ obOptions }}" as="o" hint-placeholder-count="4">
+                <button onClick="{{ o.pick }}" style="position:relative;text-align:left;background:{{ o.bg }};border:1px solid {{ o.border }};color:var(--color-text);padding:15px;min-height:64px;cursor:pointer" style-hover="border-color:var(--color-accent)">
+                  <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+                  <div style="font:600 18px/1.05 var(--font-heading);letter-spacing:.02em;text-transform:uppercase">{{ o.label }}</div>
+                  <div style="font:10.5px/1.4 ui-monospace,Menlo,monospace;color:{{ o.subColor }};margin-top:5px;letter-spacing:.05em">{{ o.sub }}</div>
+                </button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ obLast }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ obGenerate }}" class="btn btn-primary btn-block" style="height:56px;font:600 16px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;border-radius:0;opacity:{{ obGenOpacity }}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg>
+                Generate plan
+              </button>
+            </sc-if>
+            <sc-if value="{{ obBackable }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ obBack }}" class="btn btn-ghost btn-block" style="margin-top:14px;height:44px;font:600 13px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;border-radius:0">Back</button>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isPlan }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:0 16px 32px">
+            <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:22px">
+              <div style="flex:1">
+                <div style="font:500 10px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--color-accent-700);margin-bottom:6px">{{ planKicker }}</div>
+                <h1 style="margin:0 0 5px;font:600 29px/1 var(--font-heading);text-transform:uppercase">{{ planTitle }}</h1>
+                <div style="font:10.5px/1.5 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ planMeta }}</div>
+              </div>
+              <button onClick="{{ goSettings }}" class="btn btn-icon btn-secondary" style="width:44px;height:44px;border-radius:0;flex:none">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--color-divider);border:1px solid var(--color-divider);margin-bottom:22px">
+              <div style="background:var(--color-bg);padding:13px 12px"><div style="font:700 25px/1 var(--font-heading)">{{ weekDone }}</div><div style="font:10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">OF {{ weekTotal }} DONE</div></div>
+              <div style="background:var(--color-bg);padding:13px 12px"><div style="font:700 25px/1 var(--font-heading)">{{ streak }}</div><div style="font:10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">WEEK STREAK</div></div>
+              <div style="background:var(--color-bg);padding:13px 12px"><div style="display:flex;align-items:baseline;gap:3px"><div style="font:700 25px/1 var(--font-heading)">{{ weekVol }}</div><span style="font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ volUnit }}</span></div><div style="font:10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">THIS WEEK</div></div>
+            </div>
+
+            <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:11px">The week</div>
+            <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:22px">
+              <sc-for list="{{ days }}" as="d" hint-placeholder-count="4">
+                <button onClick="{{ d.open }}" style="position:relative;text-align:left;width:100%;background:{{ d.bg }};border:1px solid {{ d.border }};padding:0;cursor:pointer;display:block" style-hover="border-color:var(--color-accent)">
+                  <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+                  <div style="height:74px;background:{{ d.hatch }};position:relative;display:flex;align-items:flex-end;border-bottom:1px solid var(--color-divider)">
+                    <div style="width:100%;padding:9px 13px;display:flex;align-items:flex-end;gap:10px">
+                      <div style="flex:1">
+                        <div style="font:500 10px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:{{ d.numColor }};margin-bottom:3px">{{ d.num }}</div>
+                        <div style="font:600 21px/1 var(--font-heading);letter-spacing:.02em;text-transform:uppercase;color:var(--color-text)">{{ d.name }}</div>
+                      </div>
+                      <div style="flex:none;color:{{ d.iconColor }}">{{ d.icon }}</div>
+                    </div>
+                  </div>
+                  <div style="padding:10px 13px;display:flex;align-items:center;gap:10px">
+                    <span style="flex:1;font:10.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.05em;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ d.meta }}</span>
+                    <span style="font:600 11px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;color:{{ d.statusColor }}">{{ d.status }}</span>
+                  </div>
+                </button>
+              </sc-for>
+            </div>
+
+            <div style="position:relative;border:1px solid var(--color-divider);padding:15px">
+              <i class="corner tl"></i><i class="corner br"></i>
+              <div style="display:flex;gap:11px">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>
+                <div>
+                  <div style="font:600 13px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:4px">Auto-progression on</div>
+                  <p style="margin:0;font:12.5px/1.55 var(--font-body);color:color-mix(in srgb,var(--color-text) 68%,transparent)">Every logged PR raises the next session's suggested load by 2.5%. Miss a day and the plan holds its place.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isWorkout }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:0 0 32px">
+            <div style="padding:0 16px 14px;border-bottom:1px solid var(--color-divider)">
+              <div style="display:flex;align-items:flex-start;gap:12px">
+                <button onClick="{{ goPlan }}" class="btn btn-icon btn-secondary" style="width:40px;height:40px;border-radius:0;flex:none">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <div style="flex:1">
+                  <div style="font:500 10px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--color-accent-700);margin-bottom:4px">{{ woKicker }}</div>
+                  <h1 style="margin:0;font:600 26px/1 var(--font-heading);text-transform:uppercase">{{ woName }}</h1>
+                </div>
+                <div style="text-align:right;flex:none">
+                  <div style="font:600 21px/1 var(--font-heading)">{{ woElapsed }}</div>
+                  <div style="font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent);letter-spacing:.06em">ELAPSED</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:13px">
+                <div style="flex:1;height:3px;background:var(--color-surface);position:relative">
+                  <div style="position:absolute;inset:0 auto 0 0;width:{{ woPct }};background:var(--color-accent)"></div>
+                </div>
+                <span style="font:10.5px ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 68%,transparent)">{{ woCount }}</span>
+              </div>
+            </div>
+
+            <sc-for list="{{ exercises }}" as="ex" hint-placeholder-count="3">
+              <div style="border-bottom:1px solid var(--color-divider);background:{{ ex.bg }}">
+                <div style="display:flex;align-items:center;gap:12px;padding:14px 16px 12px">
+                  <div style="width:44px;height:44px;flex:none;background:{{ ex.hatch }};border:1px solid var(--color-divider)"></div>
+                  <div style="flex:1;min-width:0">
+                    <button onClick="{{ ex.detail }}" style="background:none;border:none;padding:0;text-align:left;cursor:pointer;display:block">
+                      <div style="font:600 18px/1.05 var(--font-heading);letter-spacing:.02em;text-transform:uppercase;color:var(--color-text)">{{ ex.name }}</div>
+                    </button>
+                    <div style="font:10.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.05em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:3px">{{ ex.meta }}</div>
+                  </div>
+                  <span style="font:600 11px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;color:{{ ex.statusColor }};flex:none">{{ ex.status }}</span>
+                </div>
+                <sc-for list="{{ ex.sets }}" as="s" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;gap:10px;padding:9px 16px;border-top:1px solid var(--color-divider);opacity:{{ s.op }};background:{{ s.rowBg }}">
+                    <span style="width:26px;flex:none;font:500 11px ui-monospace,Menlo,monospace;letter-spacing:.08em;color:{{ s.idxColor }}">{{ s.label }}</span>
+                    <sc-if value="{{ s.isActive }}" hint-placeholder-val="{{ true }}">
+                      <div style="flex:1;display:flex;align-items:center;gap:7px">
+                        <div style="display:flex;align-items:center;border:1px solid var(--color-divider)">
+                          <button onClick="{{ s.dec }}" style="width:34px;height:44px;background:transparent;border:none;color:var(--color-text);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--color-surface)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/></svg></button>
+                          <div style="min-width:54px;text-align:center;font:600 20px/1 var(--font-heading)">{{ s.weight }}</div>
+                          <button onClick="{{ s.inc }}" style="width:34px;height:44px;background:transparent;border:none;color:var(--color-text);display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="background:var(--color-surface)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></button>
+                        </div>
+                        <span style="font:600 16px/1 var(--font-heading);color:color-mix(in srgb,var(--color-text) 35%,transparent)">×</span>
+                        <button onClick="{{ s.repCycle }}" style="min-width:42px;height:44px;background:transparent;border:1px solid var(--color-divider);color:var(--color-text);font:600 20px/1 var(--font-heading);cursor:pointer" style-hover="border-color:var(--color-accent)">{{ s.reps }}</button>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ s.isStatic }}" hint-placeholder-val="{{ false }}">
+                      <div style="flex:1;display:flex;align-items:baseline;gap:5px">
+                        <span style="font:600 20px/1 var(--font-heading);color:{{ s.numColor }}">{{ s.weight }}</span>
+                        <span style="font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ unitLabel }}</span>
+                        <span style="margin:0 5px;color:color-mix(in srgb,var(--color-text) 35%,transparent)">×</span>
+                        <span style="font:600 20px/1 var(--font-heading);color:{{ s.numColor }}">{{ s.reps }}</span>
+                        <span style="margin-left:8px;font:10px ui-monospace,Menlo,monospace;letter-spacing:.06em;color:{{ s.tagColor }}">{{ s.tag }}</span>
+                      </div>
+                    </sc-if>
+                    <button onClick="{{ s.log }}" style="width:52px;height:52px;flex:none;background:{{ s.checkBg }};border:1px solid {{ s.checkBorder }};display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:var(--color-accent)">
+                      <sc-if value="{{ s.isDone }}" hint-placeholder-val="{{ false }}">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-bg)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                      </sc-if>
+                    </button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+
+            <div style="padding:20px 16px 0">
+              <button onClick="{{ finish }}" style="width:100%;height:56px;background:{{ finishBg }};color:{{ finishFg }};border:1px solid {{ finishBorder }};font:600 16px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                {{ finishLabel }}
+              </button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:24px 16px 32px;background:var(--color-accent-900);color:var(--color-bg);min-height:100%;animation:snap .32s cubic-bezier(.2,.8,.2,1)">
+            <div style="font:500 10px ui-monospace,Menlo,monospace;letter-spacing:.12em;color:var(--color-accent-300)">SESSION LOGGED · {{ today }}</div>
+            <h1 style="margin:8px 0 22px;font:600 38px/1 var(--font-heading);text-transform:uppercase">{{ doneName }}<br>Complete</h1>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:color-mix(in srgb,var(--color-bg) 20%,transparent);border:1px solid color-mix(in srgb,var(--color-bg) 20%,transparent);margin-bottom:20px">
+              <div style="padding:16px"><div style="display:flex;align-items:baseline;gap:4px"><div style="font:700 30px/1 var(--font-heading)">{{ doneVol }}</div><span style="font:10px ui-monospace,Menlo,monospace;opacity:.6">{{ unitLabel }}</span></div><div style="font:10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;opacity:.6;margin-top:5px">VOLUME</div></div>
+              <div style="padding:16px"><div style="font:700 30px/1 var(--font-heading)">{{ doneSets }}</div><div style="font:10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;opacity:.6;margin-top:5px">SETS LOGGED</div></div>
+            </div>
+
+            <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:11px">New records</div>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+              <sc-for list="{{ newPRs }}" as="p" hint-placeholder-count="2">
+                <div style="position:relative;border:1px solid var(--color-bg);padding:14px 15px;display:flex;align-items:center;gap:13px">
+                  <i class="corner tl" style="color:var(--color-bg)"></i><i class="corner br" style="color:var(--color-bg)"></i>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2"/><path d="M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2"/><path d="M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3"/></svg>
+                  <div style="flex:1">
+                    <div style="font:600 17px/1.05 var(--font-heading);letter-spacing:.02em;text-transform:uppercase">{{ p.name }}</div>
+                    <div style="font:10.5px/1.4 ui-monospace,Menlo,monospace;opacity:.7;letter-spacing:.05em;margin-top:3px">{{ p.detail }}</div>
+                  </div>
+                  <div style="text-align:right"><div style="font:700 20px/1 var(--font-heading)">{{ p.delta }}</div><div style="font:9.5px ui-monospace,Menlo,monospace;opacity:.6;letter-spacing:.06em">VS LAST</div></div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="border:1px solid color-mix(in srgb,var(--color-bg) 25%,transparent);padding:14px 15px;margin-bottom:22px">
+              <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:9px">Next session</div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="flex:1"><div style="font:600 18px/1.05 var(--font-heading);text-transform:uppercase">{{ nextName }}</div><div style="font:10.5px ui-monospace,Menlo,monospace;opacity:.6;letter-spacing:.05em;margin-top:3px">{{ nextMeta }}</div></div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><path d="m9 18 6-6-6-6"/></svg>
+              </div>
+            </div>
+
+            <button onClick="{{ goProgress }}" style="width:100%;height:56px;background:var(--color-bg);color:var(--color-accent-900);border:none;font:600 16px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;cursor:pointer">See progress</button>
+            <button onClick="{{ goPlan }}" style="margin-top:10px;width:100%;height:44px;background:transparent;border:none;color:var(--color-bg);opacity:.7;font:600 13px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;cursor:pointer">Back to plan</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isProgress }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:0 16px 32px">
+            <h1 style="margin:0 0 18px;font:600 29px/1 var(--font-heading);text-transform:uppercase">Progress</h1>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--color-divider);border:1px solid var(--color-divider);margin-bottom:22px">
+              <div style="background:var(--color-bg);padding:14px 12px"><div style="font:700 26px/1 var(--font-heading)">{{ statSessions }}</div><div style="font:10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">SESSIONS</div></div>
+              <div style="background:var(--color-bg);padding:14px 12px"><div style="display:flex;align-items:baseline;gap:3px"><div style="font:700 26px/1 var(--font-heading)">{{ statVolume }}</div><span style="font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent)">{{ volUnit }}</span></div><div style="font:10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">VOLUME</div></div>
+              <div style="background:var(--color-bg);padding:14px 12px"><div style="font:700 26px/1 var(--font-heading);color:var(--color-accent-700)">{{ statPRs }}</div><div style="font:10px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">RECORDS</div></div>
+            </div>
+
+            <div style="border:1px solid var(--color-divider);padding:15px 15px 11px;margin-bottom:22px">
+              <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:14px">
+                <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 68%,transparent)">Weekly volume</div>
+                <div style="flex:1"></div>
+                <div style="font:10.5px ui-monospace,Menlo,monospace;color:var(--color-accent-700);letter-spacing:.05em">{{ volTrend }}</div>
+              </div>
+              <div style="display:flex;align-items:flex-end;gap:5px;height:104px;border-bottom:1px solid var(--color-divider)">
+                <sc-for list="{{ bars }}" as="b" hint-placeholder-count="8">
+                  <div style="flex:1;height:{{ b.h }};background:{{ b.bg }}"></div>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent);letter-spacing:.05em"><span>{{ barsFrom }}</span><span>{{ barsTo }}</span></div>
+            </div>
+
+            <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:11px">Records</div>
+            <div style="border:1px solid var(--color-divider);margin-bottom:22px">
+              <sc-for list="{{ prList }}" as="p" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--color-divider)">
+                  <div style="width:34px;height:34px;flex:none;background:{{ p.hatch }};border:1px solid var(--color-divider)"></div>
+                  <div style="flex:1;min-width:0"><div style="font:600 16px/1.05 var(--font-heading);letter-spacing:.02em;text-transform:uppercase">{{ p.name }}</div><div style="font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent);letter-spacing:.05em;margin-top:2px">{{ p.date }}</div></div>
+                  <div style="text-align:right;flex:none"><div style="font:600 18px/1 var(--font-heading)">{{ p.value }}</div><div style="font:9.5px ui-monospace,Menlo,monospace;color:{{ p.deltaColor }};letter-spacing:.05em;margin-top:2px">{{ p.delta }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:11px">History</div>
+            <div style="border:1px solid var(--color-divider)">
+              <sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--color-divider)">
+                  <span style="width:52px;flex:none;font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent);letter-spacing:.03em">{{ h.date }}</span>
+                  <div style="flex:1;min-width:0"><div style="font:600 16px/1.05 var(--font-heading);letter-spacing:.02em;text-transform:uppercase">{{ h.name }}</div><div style="font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent);letter-spacing:.05em;margin-top:2px">{{ h.focus }}</div></div>
+                  <span style="font:600 15px/1 var(--font-heading);color:color-mix(in srgb,var(--color-text) 68%,transparent);flex:none">{{ h.vol }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isLibrary }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:0 16px 32px">
+            <h1 style="margin:0 0 16px;font:600 29px/1 var(--font-heading);text-transform:uppercase">Library</h1>
+            <div style="display:flex;align-items:center;gap:10px;border:1px solid {{ searchBorder }};padding:0 12px;height:48px;margin-bottom:12px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ searchIcon }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+              <input value="{{ search }}" onChange="{{ onSearch }}" placeholder="Search 24 exercises" style="flex:1;background:transparent;border:none;outline:none;color:var(--color-text);font:15px var(--font-body);min-width:0">
+              <sc-if value="{{ hasSearch }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ clearSearch }}" style="background:transparent;border:none;color:color-mix(in srgb,var(--color-text) 55%,transparent);display:flex;cursor:pointer;padding:4px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+              </sc-if>
+            </div>
+            <div style="display:flex;gap:6px;overflow-x:auto;margin-bottom:16px;padding-bottom:2px">
+              <sc-for list="{{ chips }}" as="c" hint-placeholder-count="7">
+                <button onClick="{{ c.pick }}" class="tag" style="flex:none;background:{{ c.bg }};border:1px solid {{ c.border }};color:{{ c.fg }};padding:7px 13px;font:600 11.5px var(--font-heading);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;min-height:34px">{{ c.label }}</button>
+              </sc-for>
+            </div>
+            <div style="font:10px ui-monospace,Menlo,monospace;letter-spacing:.08em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:11px">{{ libCount }}</div>
+            <div style="border:1px solid var(--color-divider)">
+              <sc-for list="{{ libItems }}" as="e" hint-placeholder-count="8">
+                <button onClick="{{ e.open }}" style="width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:11px 13px;background:transparent;border:none;border-bottom:1px solid var(--color-divider);cursor:pointer" style-hover="background:var(--color-surface)">
+                  <div style="width:52px;height:52px;flex:none;background:{{ e.hatch }};border:1px solid var(--color-divider)"></div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font:600 17px/1.05 var(--font-heading);letter-spacing:.02em;text-transform:uppercase;color:var(--color-text)">{{ e.name }}</div>
+                    <div style="display:flex;gap:7px;margin-top:5px">
+                      <span class="tag tag-outline" style="font:600 10px var(--font-heading);letter-spacing:.08em;text-transform:uppercase">{{ e.muscle }}</span>
+                      <span class="tag tag-outline" style="font:600 10px var(--font-heading);letter-spacing:.08em;text-transform:uppercase">{{ e.equipment }}</span>
+                    </div>
+                  </div>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="color-mix(in srgb,var(--color-text) 40%,transparent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ libEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="border:1px solid var(--color-divider);border-top:none;padding:44px 20px;text-align:center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="color-mix(in srgb,var(--color-text) 35%,transparent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+                <div style="font:600 16px/1.1 var(--font-heading);letter-spacing:.02em;text-transform:uppercase;margin-top:12px">No match</div>
+                <p style="margin:6px 0 0;font:12.5px/1.5 var(--font-body);color:color-mix(in srgb,var(--color-text) 55%,transparent)">Nothing in the catalog matches that filter.</p>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:0 16px 32px">
+            <h1 style="margin:0 0 20px;font:600 29px/1 var(--font-heading);text-transform:uppercase">Profile</h1>
+            <div style="position:relative;border:1px solid var(--color-divider);padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:24px">
+              <i class="corner tl"></i><i class="corner br"></i>
+              <div style="width:56px;height:56px;flex:none;background:var(--color-surface);border:1px solid var(--color-divider);display:flex;align-items:center;justify-content:center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="color-mix(in srgb,var(--color-text) 45%,transparent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div style="flex:1">
+                <div style="font:600 20px/1 var(--font-heading);letter-spacing:.02em;text-transform:uppercase">Athlete</div>
+                <div style="font:10.5px/1.5 ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent);letter-spacing:.05em;margin-top:4px">{{ profileLine }}</div>
+              </div>
+            </div>
+
+            <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:11px">Plan</div>
+            <div style="border:1px solid var(--color-divider);margin-bottom:24px">
+              <sc-for list="{{ settingRows }}" as="r" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--color-divider);min-height:52px">
+                  <span style="flex:1;font:14.5px var(--font-body);color:var(--color-text)">{{ r.label }}</span>
+                  <span style="font:600 15px var(--font-heading);letter-spacing:.05em;color:color-mix(in srgb,var(--color-text) 68%,transparent)">{{ r.value }}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="color-mix(in srgb,var(--color-text) 40%,transparent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:11px">Units</div>
+            <div style="display:flex;border:1px solid var(--color-divider);margin-bottom:24px">
+              <button onClick="{{ setKg }}" style="flex:1;height:48px;background:{{ kgBg }};border:none;border-right:1px solid var(--color-divider);color:{{ kgFg }};font:600 15px var(--font-heading);letter-spacing:.08em;cursor:pointer">KG</button>
+              <button onClick="{{ setLb }}" style="flex:1;height:48px;background:{{ lbBg }};border:none;color:{{ lbFg }};font:600 15px var(--font-heading);letter-spacing:.08em;cursor:pointer">LB</button>
+            </div>
+
+            <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:11px">Data</div>
+            <div style="border:1px solid var(--color-divider);margin-bottom:24px">
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;border-bottom:1px solid var(--color-divider);min-height:52px">
+                <span style="flex:1;font:14.5px var(--font-body)">Export session history</span>
+                <span style="font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent);letter-spacing:.06em">JSON</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;padding:14px;min-height:52px">
+                <span style="flex:1;font:14.5px var(--font-body)">Stored on this device only</span>
+                <span style="font:10px ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 55%,transparent);letter-spacing:.06em">LOCAL</span>
+              </div>
+            </div>
+
+            <button onClick="{{ resetPlan }}" class="btn btn-secondary btn-block" style="height:52px;border-radius:0;font:600 14px var(--font-heading);letter-spacing:.08em;text-transform:uppercase">Build a new plan</button>
+            <p style="margin:11px 0 0;font:12px/1.55 var(--font-body);color:color-mix(in srgb,var(--color-text) 55%,transparent)">Clears the current week. History and records are kept.</p>
+          </div>
+        </sc-if>
+
+      </div>
+
+      <sc-if value="{{ navBottom }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:none;display:flex;background:var(--color-bg);border-top:1px solid var(--color-divider);padding-bottom:26px">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+            <button onClick="{{ t.go }}" style="flex:1;padding:10px 0 8px;background:{{ t.bg }};border:none;border-top:2px solid {{ t.rule }};display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;min-height:56px">
+              <span style="color:{{ t.fg }};display:flex">{{ t.icon }}</span>
+              <span style="font:600 10.5px var(--font-heading);letter-spacing:.08em;color:{{ t.fg }}">{{ t.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ resting }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;right:0;bottom:0;background:var(--color-bg);border-top:1px solid var(--color-accent);padding:16px 16px 34px;animation:rise .22s cubic-bezier(.2,.8,.2,1);z-index:40">
+          <div style="display:flex;align-items:center;gap:15px">
+            <div style="position:relative;width:64px;height:64px;flex:none">
+              <svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="none" stroke="var(--color-divider)" stroke-width="2"></circle><circle cx="32" cy="32" r="29" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-dasharray="182.2" stroke-dashoffset="{{ ringOffset }}" transform="rotate(-90 32 32)"></circle></svg>
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:600 19px/1 var(--font-heading)">{{ restClock }}</div>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font:600 14px/1.1 var(--font-heading);letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-700)">Rest</div>
+              <div style="font:10.5px/1.5 ui-monospace,Menlo,monospace;color:color-mix(in srgb,var(--color-text) 68%,transparent);letter-spacing:.05em;margin-top:4px">{{ restNext }}</div>
+            </div>
+            <button onClick="{{ skipRest }}" class="btn btn-secondary" style="flex:none;height:48px;padding:0 18px;border-radius:0;font:600 13px var(--font-heading);letter-spacing:.08em;text-transform:uppercase">Skip</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;background:color-mix(in srgb,var(--color-text) 55%,transparent);z-index:60;display:flex;align-items:flex-end">
+          <div style="width:100%;max-height:82%;overflow-y:auto;background:var(--color-bg);border-top:1px solid var(--color-divider);animation:rise .22s cubic-bezier(.2,.8,.2,1)">
+            <div style="position:relative;height:150px;background:{{ detailHatch }};border-bottom:1px solid var(--color-divider);display:flex;align-items:flex-end">
+              <button onClick="{{ closeDetail }}" class="btn btn-icon btn-secondary" style="position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:0;background:var(--color-bg);z-index:2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+              <div style="margin:12px 16px;padding:6px 9px;background:var(--color-bg);border:1px solid var(--color-divider);font:10px ui-monospace,Menlo,monospace;letter-spacing:.08em;color:color-mix(in srgb,var(--color-text) 68%,transparent)">EXERCISE HERO · 16:9 · DROP IMAGE</div>
+            </div>
+            <div style="padding:18px 16px 30px">
+              <div style="font:500 10px ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--color-accent-700);margin-bottom:7px">{{ detailKicker }}</div>
+              <h2 style="margin:0 0 12px;font:600 29px/1 var(--font-heading);text-transform:uppercase">{{ detailName }}</h2>
+              <p style="margin:0 0 20px;font:14.5px/1.6 var(--font-body);color:color-mix(in srgb,var(--color-text) 78%,transparent)">{{ detailDesc }}</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--color-divider);border:1px solid var(--color-divider);margin-bottom:22px">
+                <div style="background:var(--color-bg);padding:12px"><div style="font:600 18px/1 var(--font-heading)">{{ detailPR }}</div><div style="font:9.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">YOUR PR</div></div>
+                <div style="background:var(--color-bg);padding:12px"><div style="font:600 18px/1 var(--font-heading);text-transform:uppercase">{{ detailMuscle }}</div><div style="font:9.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">GROUP</div></div>
+                <div style="background:var(--color-bg);padding:12px"><div style="font:600 18px/1 var(--font-heading);text-transform:uppercase">{{ detailEquip }}</div><div style="font:9.5px/1.4 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:4px">SETUP</div></div>
+              </div>
+              <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:11px">Form cues</div>
+              <div style="display:flex;flex-direction:column;gap:1px;background:var(--color-divider);border:1px solid var(--color-divider)">
+                <sc-for list="{{ detailCues }}" as="c" hint-placeholder-count="3">
+                  <div style="background:var(--color-bg);padding:13px 14px;display:flex;gap:11px">
+                    <span style="font:500 10px/1.6 ui-monospace,Menlo,monospace;color:var(--color-accent-700);flex:none;letter-spacing:.08em">{{ c.n }}</span>
+                    <span style="font:14px/1.55 var(--font-body);color:color-mix(in srgb,var(--color-text) 78%,transparent)">{{ c.text }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </x-import>
+
+  <div style="width:238px;flex:none;position:sticky;top:44px">
+    <div style="font:600 12px var(--font-heading);letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:12px">Notes</div>
+    <div style="border-top:1px solid var(--color-divider);padding:14px 0;font:12.5px/1.6 var(--font-body);color:color-mix(in srgb,var(--color-text) 68%,transparent)">
+      <strong style="color:var(--color-text);font-weight:600">Industry system.</strong> Steel-blue mono accent, square corners, registration marks on cards and figures — no dark mode, no second hue.
+    </div>
+    <div style="border-top:1px solid var(--color-divider);padding:14px 0;font:12.5px/1.6 var(--font-body);color:color-mix(in srgb,var(--color-text) 68%,transparent)">
+      <strong style="color:var(--color-text);font-weight:600">Set logging.</strong> Only the current set is editable. Log it and the row collapses, the rest timer rises, the next set opens. 52px targets throughout.
+    </div>
+    <div style="border-top:1px solid var(--color-divider);padding:14px 0;font:12.5px/1.6 var(--font-body);color:color-mix(in srgb,var(--color-text) 68%,transparent)">
+      <strong style="color:var(--color-text);font-weight:600">Muscle hatches.</strong> Angle and density vary by group; hue stays the one steel accent, matching the system's mono palette.
+    </div>
+    <div style="border-top:1px solid var(--color-divider);padding:14px 0;font:12.5px/1.6 var(--font-body);color:color-mix(in srgb,var(--color-text) 68%,transparent)">
+      <strong style="color:var(--color-text);font-weight:600">PR celebration.</strong> The one screen that fills with the deep accent field — the exception the system's guide reserves for section dividers.
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:960,&quot;height&quot;:980},&quot;navPattern&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Bottom bar&quot;,&quot;Top bar&quot;],&quot;default&quot;:&quot;Bottom bar&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;restSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:30,&quot;max&quot;:180,&quot;step&quot;:15,&quot;default&quot;:90,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Training&quot;}}">
+const HATCH = {
+  chest: 'repeating-linear-gradient(45deg,var(--color-accent-400) 0 2px,transparent 2px 9px),var(--color-surface)',
+  back: 'repeating-linear-gradient(0deg,var(--color-accent-500) 0 2px,transparent 2px 9px),var(--color-surface)',
+  legs: 'repeating-linear-gradient(90deg,var(--color-accent-600) 0 2px,transparent 2px 8px),var(--color-surface)',
+  shoulders: 'repeating-linear-gradient(-45deg,var(--color-accent-400) 0 2px,transparent 2px 9px),var(--color-surface)',
+  arms: 'repeating-linear-gradient(45deg,var(--color-accent-300) 0 1px,transparent 1px 6px),repeating-linear-gradient(-45deg,var(--color-accent-300) 0 1px,transparent 1px 6px),var(--color-surface)',
+  core: 'radial-gradient(var(--color-accent-500) 1.2px,transparent 1.3px) 0 0/9px 9px,var(--color-surface)',
+};
+
+const EX = {
+  bp: { name: 'Barbell Bench Press', muscle: 'chest', equipment: 'gym', desc: 'Classic horizontal pressing movement for chest, shoulders and triceps.', cues: ['Retract scapula and keep feet planted', 'Lower bar to mid-chest with control', 'Press up explosively without bouncing'] },
+  dbp: { name: 'Dumbbell Bench Press', muscle: 'chest', equipment: 'mixed', desc: 'Allows greater range of motion and independent arm work.', cues: ['Keep wrists stacked over elbows', 'Lower until slight stretch in chest', 'Press up and slightly inward'] },
+  pushup: { name: 'Push-Up', muscle: 'chest', equipment: 'home', desc: 'Bodyweight staple that builds pressing strength anywhere.', cues: ['Body in a straight line from head to heels', 'Elbows ~45° from torso', 'Full lockout at the top'] },
+  ohp: { name: 'Overhead Press', muscle: 'shoulders', equipment: 'gym', desc: 'Vertical press for shoulder strength and stability.', cues: ['Brace core hard', 'Bar path close to face', 'Lock out overhead with head through'] },
+  'db-ohp': { name: 'Dumbbell Shoulder Press', muscle: 'shoulders', equipment: 'mixed', desc: 'Seated or standing dumbbell press for balanced shoulder development.', cues: ['Start with dumbbells at shoulder height', 'Press up without excessive lean', 'Control the descent'] },
+  latpd: { name: 'Lat Pulldown', muscle: 'back', equipment: 'gym', desc: 'Vertical pulling for lats and upper back.', cues: ['Pull elbows down and back', 'Slight lean back at bottom', 'Control the stretch at the top'] },
+  pullup: { name: 'Pull-Up', muscle: 'back', equipment: 'mixed', desc: 'King of bodyweight pulling movements.', cues: ['Full hang to start', 'Pull chest to bar', 'Avoid kipping unless training for it'] },
+  row: { name: 'Barbell Row', muscle: 'back', equipment: 'gym', desc: 'Horizontal pull for thickness and posture.', cues: ['Hinge at hips, flat back', 'Pull bar to lower chest/upper abs', 'Squeeze shoulder blades'] },
+  'db-row': { name: 'Dumbbell Row', muscle: 'back', equipment: 'mixed', desc: 'Unilateral row that fixes imbalances.', cues: ['Support on bench', 'Pull elbow high', 'Keep torso stable'] },
+  squat: { name: 'Barbell Back Squat', muscle: 'legs', equipment: 'gym', desc: 'Fundamental lower-body strength builder.', cues: ['Brace before unrack', 'Break at hips and knees together', 'Drive through mid-foot'] },
+  goblet: { name: 'Goblet Squat', muscle: 'legs', equipment: 'mixed', desc: 'Great teaching tool and home-friendly squat variation.', cues: ['Hold weight at chest', 'Elbows inside knees at bottom', 'Upright torso'] },
+  rdl: { name: 'Romanian Deadlift', muscle: 'legs', equipment: 'gym', desc: 'Posterior chain focus — hamstrings and glutes.', cues: ['Soft knee bend', 'Push hips back', 'Feel stretch in hamstrings'] },
+  lunges: { name: 'Walking Lunges', muscle: 'legs', equipment: 'mixed', desc: 'Unilateral leg work for strength and balance.', cues: ['Long enough step', 'Front knee tracks over mid-foot', 'Upright torso'] },
+  legpress: { name: 'Leg Press', muscle: 'legs', equipment: 'gym', desc: 'Machine-based quad and glute builder.', cues: ['Feet mid-platform', 'Lower with control', 'Do not lock knees hard'] },
+  curl: { name: 'Barbell Curl', muscle: 'arms', equipment: 'gym', desc: 'Classic biceps builder.', cues: ['Elbows pinned to sides', 'No swinging', 'Full stretch at bottom'] },
+  'db-curl': { name: 'Dumbbell Curl', muscle: 'arms', equipment: 'mixed', desc: 'Allows natural wrist rotation (supination).', cues: ['Start neutral or supinated', 'Control the eccentric', 'Squeeze at top'] },
+  triceps: { name: 'Triceps Pushdown', muscle: 'arms', equipment: 'gym', desc: 'Isolation for the triceps.', cues: ['Elbows fixed at sides', 'Full extension', 'Control the return'] },
+  'oh-ext': { name: 'Overhead Triceps Extension', muscle: 'arms', equipment: 'mixed', desc: 'Stretches the long head of the triceps.', cues: ['Keep elbows pointed up', 'Lower behind head', 'Extend fully'] },
+  plank: { name: 'Plank', muscle: 'core', equipment: 'home', desc: 'Isometric core stability.', cues: ['Neutral spine', 'Squeeze glutes', 'Breathe steadily'] },
+  crunch: { name: 'Cable Crunch', muscle: 'core', equipment: 'gym', desc: 'Loaded spinal flexion for abs.', cues: ['Round the spine intentionally', 'Pull with abs not arms', 'Controlled tempo'] },
+  hanging: { name: 'Hanging Knee Raise', muscle: 'core', equipment: 'mixed', desc: 'Dynamic core and hip flexor work.', cues: ['Avoid swinging', 'Raise knees to chest', 'Control the lower'] },
+  facepull: { name: 'Face Pull', muscle: 'shoulders', equipment: 'gym', desc: 'Rear delt and external rotation health movement.', cues: ['Pull to face/forehead', 'Externally rotate at end', 'Squeeze rear delts'] },
+  latraise: { name: 'Lateral Raise', muscle: 'shoulders', equipment: 'mixed', desc: 'Isolation for the side delts.', cues: ['Slight elbow bend', 'Lead with elbows', 'Stop at shoulder height'] },
+  hipthrust: { name: 'Hip Thrust', muscle: 'legs', equipment: 'gym', desc: 'Glute-focused hip extension.', cues: ['Chin tucked', 'Drive through heels', 'Full hip extension and squeeze'] },
+};
+
+const DAYS = [
+  { name: 'Upper A', focus: 'Upper Body', ids: ['bp', 'row', 'ohp', 'latpd', 'curl', 'triceps'] },
+  { name: 'Lower A', focus: 'Lower Body', ids: ['squat', 'rdl', 'legpress', 'lunges', 'plank'] },
+  { name: 'Upper B', focus: 'Upper Body', ids: ['dbp', 'db-row', 'db-ohp', 'facepull', 'db-curl', 'oh-ext'] },
+  { name: 'Lower B', focus: 'Lower Body', ids: ['goblet', 'hipthrust', 'lunges', 'rdl', 'hanging'] },
+];
+
+const SEED = { bp: 82.5, row: 70, ohp: 47.5, latpd: 65, curl: 30, triceps: 35, squat: 110, rdl: 90, legpress: 160, lunges: 24, plank: 0, dbp: 32, 'db-row': 34, 'db-ohp': 24, facepull: 27, 'db-curl': 16, 'oh-ext': 22, goblet: 32, hipthrust: 120, hanging: 0 };
+
+const QUESTIONS = [
+  { key: 'goal', title: "What are you training for?", sub: 'Sets the rep ranges and how volume is distributed across the week.', cols: '1fr 1fr', options: [
+    { v: 'muscle', label: 'Build Muscle', sub: '8–12 REPS · VOLUME' },
+    { v: 'strength', label: 'Get Stronger', sub: '3–6 REPS · HEAVY' },
+    { v: 'fitness', label: 'General Fitness', sub: 'BALANCED' },
+    { v: 'fatloss', label: 'Lose Fat', sub: 'DENSITY · SHORT REST' },
+  ] },
+  { key: 'experience', title: 'How long have you been lifting?', sub: 'Determines starting loads, set counts and how fast weight climbs.', cols: '1fr', options: [
+    { v: 'beginner', label: 'Beginner', sub: 'UNDER 1 YEAR · 3 SETS · 20 KG START' },
+    { v: 'intermediate', label: 'Intermediate', sub: '1–3 YEARS · 3 SETS · 40 KG START' },
+    { v: 'advanced', label: 'Advanced', sub: '3+ YEARS · 4 SETS · 60 KG START' },
+  ] },
+  { key: 'equipment', title: 'Where do you train?', sub: 'Home swaps barbell and machine work for bodyweight and dumbbell variants.', cols: '1fr', options: [
+    { v: 'gym', label: 'Full Gym', sub: 'RACKS · MACHINES · CABLES' },
+    { v: 'home', label: 'Home / Minimal', sub: 'DUMBBELLS · BODYWEIGHT' },
+    { v: 'mixed', label: 'Mixed', sub: 'GYM TEMPLATE · FLEXIBLE' },
+  ] },
+  { key: 'days', title: 'Days per week', sub: 'Three is full body, four is upper/lower, five and six split by movement.', cols: '1fr 1fr', options: [
+    { v: '3', label: '3 days', sub: 'FULL BODY A / B / C' },
+    { v: '4', label: '4 days', sub: 'UPPER / LOWER ×2' },
+    { v: '5', label: '5 days', sub: 'PUSH / PULL / LEGS +2' },
+    { v: '6', label: '6 days', sub: 'PPL ×2' },
+  ] },
+];
+
+const HISTORY = [
+  { date: '09-04', name: 'Upper B', focus: 'Upper Body', vol: 3140 },
+  { date: '09-02', name: 'Lower A', focus: 'Lower Body', vol: 4880 },
+  { date: '08-31', name: 'Upper A', focus: 'Upper Body', vol: 2960 },
+  { date: '08-29', name: 'Lower B', focus: 'Lower Body', vol: 4210 },
+  { date: '08-27', name: 'Upper B', focus: 'Upper Body', vol: 3020 },
+];
+
+const PRS = [
+  { id: 'squat', value: 110, reps: 6, date: '2026-09-02', delta: '+5.0' },
+  { id: 'rdl', value: 90, reps: 8, date: '2026-09-02', delta: '+2.5' },
+  { id: 'bp', value: 80, reps: 8, date: '2026-08-31', delta: '+2.5' },
+  { id: 'row', value: 70, reps: 8, date: '2026-08-31', delta: '—' },
+  { id: 'ohp', value: 47.5, reps: 6, date: '2026-08-27', delta: '+2.5' },
+];
+
+const WEEK_VOL = [2860, 3240, 3010, 3680, 3520, 4120, 4460, 4900];
+
+const SCREENS = [
+  { id: 'onboard', label: 'Onboarding' },
+  { id: 'plan', label: 'Plan' },
+  { id: 'workout', label: 'Workout' },
+  { id: 'rest', label: 'Rest timer' },
+  { id: 'done', label: 'Complete' },
+  { id: 'progress', label: 'Progress' },
+  { id: 'library', label: 'Library' },
+  { id: 'detail', label: 'Exercise detail' },
+  { id: 'settings', label: 'Profile' },
+];
+
+function svg(color, size, children) {
+  return React.createElement('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: color, strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }, children);
+}
+function p(d, k) { return React.createElement('path', { d, key: k }); }
+
+function iconCalendar(c) { return svg(c, 20, [p('M8 2v3', 'a'), p('M16 2v3', 'b'), React.createElement('rect', { x: 3, y: 3, width: 18, height: 18, rx: 0, key: 'r' }), p('M3 9h18', 'c'), p('M8 13h.01', 'd'), p('M12 13h.01', 'e'), p('M16 13h.01', 'f')]); }
+function iconDumbbell(c, s) { return svg(c, s || 20, [p('M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z', 'a'), p('m2.5 21.5 1.4-1.4', 'b'), p('m20.1 3.9 1.4-1.4', 'c'), p('M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z', 'd'), p('m9.6 14.4 4.8-4.8', 'e')]); }
+function iconTrend(c) { return svg(c, 20, [p('M16 7h6v6', 'a'), p('m22 7-8.5 8.5-5-5L2 17', 'b')]); }
+function iconBook(c) { return svg(c, 20, [p('M12 5v16', 'a'), p('M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z', 'b')]); }
+function iconCheck(c, s) { return svg(c, s || 20, [p('M20 6 9 17l-5-5', 'a')]); }
+function iconPlay(c, s) { return svg(c, s || 20, [p('M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z', 'a')]); }
+
+class Component extends DCLogic {
+  state = {
+    screen: 'plan',
+    obStep: 0,
+    profile: { goal: 'muscle', experience: 'intermediate', equipment: 'gym', days: '4' },
+    obPicks: {},
+    dayIndex: 0,
+    completedDays: [2],
+    logged: {},
+    weights: {},
+    reps: {},
+    resting: false,
+    restLeft: 0,
+    elapsed: 1847,
+    detailId: null,
+    muscle: 'all',
+    search: '',
+    unit: 'kg',
+  };
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      const s = this.state;
+      if (s.resting && s.restLeft > 0) this.setState({ restLeft: s.restLeft - 1 });
+      else if (s.resting && s.restLeft <= 0) this.setState({ resting: false });
+      if (s.screen === 'workout') this.setState({ elapsed: s.elapsed + 1 });
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+
+  restLen() { return this.props.restSeconds ?? 90; }
+  navPattern() { return this.props.navPattern ?? 'Bottom bar'; }
+
+  go = (id) => {
+    if (id === 'rest') { this.setState({ screen: 'workout', detailId: null, resting: true, restLeft: this.restLen() }); return; }
+    if (id === 'detail') { this.setState({ screen: 'library', detailId: 'squat', resting: false }); return; }
+    if (id === 'onboard') { this.setState({ screen: 'onboard', obStep: 0, obPicks: {} }); return; }
+    this.setState({ screen: id, detailId: null, resting: false });
+  };
+
+  day() { return DAYS[this.state.dayIndex]; }
+
+  setCount() {
+    const n = this.state.profile.experience === 'advanced' ? 4 : 3;
+    return n;
+  }
+
+  wOf(id) {
+    if (this.state.weights[id] !== undefined) return this.state.weights[id];
+    return SEED[id] ?? 40;
+  }
+  rOf(key) {
+    if (this.state.reps[key] !== undefined) return this.state.reps[key];
+    return 8;
+  }
+
+  activeIndex() {
+    const d = this.day();
+    const n = this.setCount();
+    for (let ei = 0; ei < d.ids.length; ei++) {
+      for (let si = 0; si < n; si++) {
+        if (!this.state.logged[ei + '-' + si]) return { ei, si };
+      }
+    }
+    return null;
+  }
+
+  logSet = (ei, si) => {
+    const key = ei + '-' + si;
+    const logged = { ...this.state.logged };
+    if (logged[key]) { delete logged[key]; this.setState({ logged }); return; }
+    logged[key] = { w: this.wOf(this.day().ids[ei]), r: this.rOf(key) };
+    this.setState({ logged, resting: true, restLeft: this.restLen() });
+  };
+
+  bump = (id, delta) => { this.setState({ weights: { ...this.state.weights, [id]: Math.max(0, this.wOf(id) + delta) } }); };
+  cycleReps = (key) => { const cur = this.rOf(key); this.setState({ reps: { ...this.state.reps, [key]: cur >= 12 ? 5 : cur + 1 } }); };
+
+  loggedTotals() {
+    let vol = 0, sets = 0;
+    Object.keys(this.state.logged).forEach(k => { const s = this.state.logged[k]; vol += s.w * s.r; sets++; });
+    return { vol, sets };
+  }
+
+  fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+  conv(kg) { return this.state.unit === 'lb' ? Math.round(kg * 2.20462 * 2) / 2 : kg; }
+
+  clock(sec) {
+    const m = Math.floor(sec / 60), s = sec % 60;
+    return m + ':' + String(s).padStart(2, '0');
+  }
+
+  renderVals() {
+    const st = this.state;
+    const screen = st.screen;
+    const unitLabel = st.unit.toUpperCase();
+    const navBottom = this.navPattern() === 'Bottom bar';
+    const ACCENT = 'var(--color-accent)';
+    const ACCENT_700 = 'var(--color-accent-700)';
+    const MUTED = 'color-mix(in srgb,var(--color-text) 55%,transparent)';
+
+    const tabDefs = [
+      { id: 'plan', label: 'PLAN', short: 'PLAN', icon: iconCalendar },
+      { id: 'workout', label: 'TRAIN', short: 'TRAIN', icon: iconDumbbell },
+      { id: 'progress', label: 'PROGRESS', short: 'PROG', icon: iconTrend },
+      { id: 'library', label: 'LIBRARY', short: 'LIB', icon: iconBook },
+    ];
+    const tabs = tabDefs.map(t => {
+      const on = screen === t.id || (t.id === 'plan' && screen === 'done') || (t.id === 'library' && screen === 'detail');
+      return {
+        label: t.label, short: t.short, go: () => this.go(t.id),
+        bg: on ? 'var(--color-surface)' : 'transparent',
+        rule: on ? ACCENT : 'transparent',
+        fg: on ? ACCENT_700 : MUTED,
+        icon: t.icon(on ? ACCENT_700 : MUTED),
+      };
+    });
+
+    const rail = SCREENS.map((s, i) => {
+      const on = s.id === screen || (s.id === 'rest' && st.resting) || (s.id === 'detail' && !!st.detailId);
+      return {
+        n: String(i + 1).padStart(2, '0'), label: s.label, go: () => this.go(s.id),
+        bg: on ? 'var(--color-surface)' : 'transparent', fg: on ? 'var(--color-text)' : MUTED, num: on ? ACCENT : 'color-mix(in srgb,var(--color-text) 40%,transparent)',
+      };
+    });
+
+    const q = QUESTIONS[Math.min(st.obStep, 3)];
+    const obOptions = q.options.map(o => {
+      const sel = st.obPicks[q.key] === o.v;
+      return {
+        label: o.label, sub: sel ? 'SELECTED' : o.sub, pick: () => {
+          const picks = { ...st.obPicks, [q.key]: o.v };
+          this.setState({ obPicks: picks, obStep: st.obStep < 3 ? st.obStep + 1 : 3 });
+        },
+        bg: sel ? 'var(--color-surface)' : 'transparent', border: sel ? ACCENT : 'var(--color-divider)',
+        subColor: sel ? ACCENT_700 : MUTED,
+      };
+    });
+    const obBars = [0, 1, 2, 3].map(i => ({ bg: i <= st.obStep ? ACCENT : 'var(--color-divider)' }));
+    const obComplete = ['goal', 'experience', 'equipment', 'days'].every(k => st.obPicks[k]);
+
+    const days = DAYS.map((d, i) => {
+      const done = st.completedDays.indexOf(i) >= 0;
+      const active = i === st.dayIndex && !done;
+      const primary = EX[d.ids[0]].muscle;
+      return {
+        num: 'DAY ' + String(i + 1).padStart(2, '0'),
+        name: d.name,
+        meta: d.focus.toUpperCase() + ' · ' + d.ids.length + ' LIFTS · ~' + (d.ids.length * 8 + 6) + ' MIN',
+        hatch: HATCH[primary],
+        bg: 'transparent',
+        border: done ? ACCENT_700 : (active ? ACCENT : 'var(--color-divider)'),
+        numColor: active ? ACCENT_700 : MUTED,
+        status: done ? 'Logged' : (active ? 'Start' : 'Queued'),
+        statusColor: done ? ACCENT_700 : (active ? ACCENT : MUTED),
+        icon: done ? iconCheck(ACCENT_700, 21) : (active ? iconPlay(ACCENT_700, 21) : iconDumbbell(MUTED, 21)),
+        iconColor: ACCENT_700,
+        open: () => this.setState({ screen: 'workout', dayIndex: i, logged: {}, elapsed: 0, resting: false }),
+      };
+    });
+
+    const d = this.day();
+    const n = this.setCount();
+    const act = this.activeIndex();
+    const totalSets = d.ids.length * n;
+    const doneSets = Object.keys(st.logged).length;
+    const exercises = d.ids.map((id, ei) => {
+      const ex = EX[id];
+      const exDone = Array.from({ length: n }).every((_, si) => st.logged[ei + '-' + si]);
+      const sets = Array.from({ length: n }).map((_, si) => {
+        const key = ei + '-' + si;
+        const rec = st.logged[key];
+        const isDone = !!rec;
+        const isActive = !!act && act.ei === ei && act.si === si;
+        const w = isDone ? rec.w : this.wOf(id);
+        const r = isDone ? rec.r : this.rOf(key);
+        return {
+          label: String(si + 1).padStart(2, '0'),
+          weight: this.conv(w),
+          reps: r,
+          isDone, isActive, isStatic: !isActive,
+          op: isDone || isActive ? '1' : '0.5',
+          rowBg: isActive ? 'var(--color-surface)' : 'transparent',
+          idxColor: isDone ? ACCENT_700 : (isActive ? ACCENT_700 : MUTED),
+          numColor: isDone ? MUTED : 'var(--color-text)',
+          tag: isDone ? 'LOGGED' : '',
+          tagColor: ACCENT_700,
+          checkBg: isDone ? ACCENT : 'transparent',
+          checkBorder: isDone ? ACCENT : (isActive ? 'var(--color-text)' : 'var(--color-divider)'),
+          log: () => this.logSet(ei, si),
+          inc: () => this.bump(id, 2.5),
+          dec: () => this.bump(id, -2.5),
+          repCycle: () => this.cycleReps(key),
+        };
+      });
+      return {
+        name: ex.name,
+        meta: ex.muscle.toUpperCase() + ' · ' + n + ' × ' + (st.profile.experience === 'advanced' ? '5–8' : '6–10') + ' · ' + ex.equipment.toUpperCase(),
+        hatch: HATCH[ex.muscle],
+        bg: 'transparent',
+        status: exDone ? 'Done' : '',
+        statusColor: ACCENT_700,
+        sets,
+        detail: () => this.setState({ detailId: id }),
+      };
+    });
+
+    const totals = this.loggedTotals();
+    const anyLogged = doneSets > 0;
+
+    const bars = WEEK_VOL.map((v, i) => ({
+      h: Math.round((v / 4900) * 100) + '%',
+      bg: i === WEEK_VOL.length - 1 ? ACCENT : (i === WEEK_VOL.length - 2 ? ACCENT_700 : 'var(--color-accent-300)'),
+    }));
+
+    const prList = PRS.map(pr => ({
+      name: EX[pr.id].name,
+      hatch: HATCH[EX[pr.id].muscle],
+      date: pr.date,
+      value: this.conv(pr.value) + ' × ' + pr.reps,
+      delta: pr.delta === '—' ? '—' : pr.delta + ' ' + unitLabel,
+      deltaColor: pr.delta === '—' ? MUTED : ACCENT_700,
+    }));
+
+    const history = HISTORY.map(h => ({ date: h.date, name: h.name, focus: h.focus.toUpperCase(), vol: this.fmt(this.conv(h.vol)) + ' ' + unitLabel }));
+
+    const muscles = ['all', 'chest', 'back', 'legs', 'shoulders', 'arms', 'core'];
+    const chips = muscles.map(m => ({
+      label: m === 'all' ? 'All' : m,
+      pick: () => this.setState({ muscle: m }),
+      bg: st.muscle === m ? 'var(--color-surface)' : 'transparent',
+      border: st.muscle === m ? ACCENT : 'var(--color-divider)',
+      fg: st.muscle === m ? ACCENT_700 : MUTED,
+    }));
+    const qs = st.search.trim().toLowerCase();
+    const libItems = Object.keys(EX).filter(id => {
+      const e = EX[id];
+      if (st.muscle !== 'all' && e.muscle !== st.muscle) return false;
+      if (qs && e.name.toLowerCase().indexOf(qs) < 0 && e.muscle.indexOf(qs) < 0) return false;
+      return true;
+    }).map(id => ({
+      name: EX[id].name, muscle: EX[id].muscle, equipment: EX[id].equipment,
+      hatch: HATCH[EX[id].muscle], open: () => this.setState({ detailId: id }),
+    }));
+
+    const det = st.detailId ? EX[st.detailId] : null;
+    const detPR = st.detailId ? PRS.filter(x => x.id === st.detailId)[0] : null;
+
+    const nextIdx = (st.dayIndex + 1) % DAYS.length;
+
+    return {
+      unitLabel, volUnit: st.unit === 'lb' ? 'LB' : 'KG',
+      rail, tabs, navBottom, navTop: !navBottom,
+      scrollPad: navBottom ? '62px 0 0' : '0',
+      isOnboard: screen === 'onboard', isPlan: screen === 'plan', isWorkout: screen === 'workout',
+      isDone: screen === 'done', isProgress: screen === 'progress', isLibrary: screen === 'library',
+      isSettings: screen === 'settings',
+
+      obStepLabel: 'STEP ' + String(Math.min(st.obStep + 1, 4)).padStart(2, '0') + ' / 04',
+      obTitle: q.title, obSub: q.sub, obCols: q.cols, obOptions, obBars,
+      obLast: st.obStep === 3, obGenOpacity: obComplete ? '1' : '0.45',
+      obBackable: st.obStep > 0,
+      obBack: () => this.setState({ obStep: Math.max(0, st.obStep - 1) }),
+      obGenerate: () => {
+        if (!obComplete) return;
+        this.setState({ profile: { ...st.profile, ...st.obPicks }, screen: 'plan' });
+      },
+
+      planKicker: st.profile.goal.toUpperCase() + ' · ' + st.profile.days + ' DAYS / WEEK',
+      planTitle: 'Week 07',
+      planMeta: st.profile.experience.toUpperCase() + ' · ' + st.profile.equipment.toUpperCase() + ' EQUIPMENT · AUTO-PROGRESSING',
+      days,
+      weekDone: st.completedDays.length, weekTotal: DAYS.length, streak: 6,
+      weekVol: (this.conv(8020) / 1000).toFixed(1) + 'k',
+      goSettings: () => this.go('settings'), goPlan: () => this.go('plan'), goProgress: () => this.go('progress'),
+
+      woKicker: 'DAY ' + String(st.dayIndex + 1).padStart(2, '0') + ' · ' + d.focus.toUpperCase(),
+      woName: d.name, woElapsed: this.clock(st.elapsed),
+      woPct: Math.round((doneSets / totalSets) * 100) + '%',
+      woCount: doneSets + ' / ' + totalSets + ' SETS',
+      exercises,
+      finish: () => { if (anyLogged) this.setState({ screen: 'done', resting: false, completedDays: st.completedDays.indexOf(st.dayIndex) < 0 ? st.completedDays.concat([st.dayIndex]) : st.completedDays }); },
+      finishLabel: anyLogged ? 'Finish session' : 'Log a set to finish',
+      finishBg: anyLogged ? ACCENT : 'transparent',
+      finishFg: anyLogged ? 'var(--color-bg)' : MUTED,
+      finishBorder: anyLogged ? ACCENT : 'var(--color-divider)',
+
+      resting: st.resting,
+      restClock: this.clock(Math.max(0, st.restLeft)),
+      ringOffset: 182.2 * (1 - Math.max(0, st.restLeft) / this.restLen()),
+      restNext: act ? ('NEXT · ' + EX[d.ids[act.ei]].name.toUpperCase() + ' · SET ' + String(act.si + 1).padStart(2, '0')) : 'ALL SETS LOGGED',
+      skipRest: () => this.setState({ resting: false, restLeft: 0 }),
+
+      today: '2026-09-06',
+      doneName: d.name,
+      doneVol: this.fmt(this.conv(totals.vol || 3240)),
+      doneSets: totals.sets || 15,
+      newPRs: [
+        { name: EX[d.ids[0]].name, detail: this.conv(this.wOf(d.ids[0])) + ' ' + unitLabel + ' × ' + 8 + ' · PREVIOUS ' + this.conv(this.wOf(d.ids[0]) - 2.5) + ' ' + unitLabel, delta: '+2.5' },
+        { name: EX[d.ids[1]].name, detail: this.conv(this.wOf(d.ids[1])) + ' ' + unitLabel + ' × ' + 8 + ' · PREVIOUS ' + this.conv(this.wOf(d.ids[1]) - 2.5) + ' ' + unitLabel, delta: '+2.5' },
+      ],
+      nextName: DAYS[nextIdx].name,
+      nextMeta: DAYS[nextIdx].focus.toUpperCase() + ' · ' + DAYS[nextIdx].ids.length + ' LIFTS',
+
+      statSessions: 14, statVolume: this.fmt(this.conv(38420) / 1000).replace(/,/g, '') + 'k', statPRs: PRS.length,
+      volTrend: '+11% VS LAST WEEK', bars, barsFrom: 'W22', barsTo: 'W29 · ' + this.fmt(this.conv(4900) / 1000).replace(/,/g, '') + 'k',
+      prList, history,
+
+      search: st.search, hasSearch: st.search.length > 0,
+      searchBorder: st.search ? ACCENT : 'var(--color-divider)', searchIcon: st.search ? ACCENT_700 : MUTED,
+      onSearch: (e) => this.setState({ search: e.target.value }),
+      clearSearch: () => this.setState({ search: '' }),
+      chips, libItems, libEmpty: libItems.length === 0,
+      libCount: libItems.length + ' OF 24 MOVEMENTS',
+
+      showDetail: !!det,
+      detailName: det ? det.name : '',
+      detailKicker: det ? (det.muscle.toUpperCase() + ' · ' + det.equipment.toUpperCase()) : '',
+      detailDesc: det ? det.desc : '',
+      detailHatch: det ? HATCH[det.muscle] : HATCH.chest,
+      detailMuscle: det ? det.muscle : '',
+      detailEquip: det ? det.equipment : '',
+      detailPR: detPR ? (this.conv(detPR.value) + ' ' + unitLabel) : '—',
+      detailCues: det ? det.cues.map((c, i) => ({ n: String(i + 1).padStart(2, '0'), text: c })) : [],
+      closeDetail: () => this.setState({ detailId: null }),
+
+      profileLine: st.profile.goal.toUpperCase() + ' · ' + st.profile.experience.toUpperCase() + ' · ' + st.profile.days + ' DAYS',
+      settingRows: [
+        { label: 'Goal', value: st.profile.goal.charAt(0).toUpperCase() + st.profile.goal.slice(1) },
+        { label: 'Experience', value: st.profile.experience.charAt(0).toUpperCase() + st.profile.experience.slice(1) },
+        { label: 'Equipment', value: st.profile.equipment.charAt(0).toUpperCase() + st.profile.equipment.slice(1) },
+        { label: 'Days per week', value: st.profile.days },
+        { label: 'Rest between sets', value: this.clock(this.restLen()) },
+      ],
+      kgBg: st.unit === 'kg' ? 'var(--color-surface)' : 'transparent', kgFg: st.unit === 'kg' ? ACCENT_700 : MUTED,
+      lbBg: st.unit === 'lb' ? 'var(--color-surface)' : 'transparent', lbFg: st.unit === 'lb' ? ACCENT_700 : MUTED,
+      setKg: () => this.setState({ unit: 'kg' }), setLb: () => this.setState({ unit: 'lb' }),
+      resetPlan: () => this.go('onboard'),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
