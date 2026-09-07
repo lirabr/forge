@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#5b8def">
+  <meta name="theme-color" content="#5980a6">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Forge">
   <meta name="mobile-web-app-capable" content="yes">
   <title>Forge — Adaptive Strength Training</title>
@@ -16,162 +16,297 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="app">
-    <!-- Onboarding Screen -->
+    <!-- Onboarding -->
     <section id="onboarding" class="screen active">
-      <div class="container narrow">
-        <div class="logo">FORGE</div>
-        <h1>Build your adaptive plan</h1>
-        <p class="subtitle">Personalized strength training that progresses with you.</p>
-
+      <div class="ob-header">
+        <div class="ob-top">
+          <div>
+            <div class="logo large">FORGE</div>
+            <div class="kicker" id="ob-step-label">STEP 01 · GOAL</div>
+          </div>
+          <div class="ob-icon" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z"/><path d="m2.5 21.5 1.4-1.4"/><path d="m20.1 3.9 1.4-1.4"/><path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z"/><path d="m9.6 14.4 4.8-4.8"/></svg>
+          </div>
+        </div>
+        <div class="ob-progress" id="ob-progress" aria-hidden="true">
+          <div class="ob-seg on"></div><div class="ob-seg"></div><div class="ob-seg"></div><div class="ob-seg"></div>
+        </div>
+      </div>
+      <div class="ob-body">
         <form id="onboarding-form">
-          <div class="form-group">
-            <label>What's your main goal?</label>
+          <div class="ob-step active" data-step="0">
+            <h1>What are you training for?</h1>
+            <p class="subtitle">Sets the tone for volume across the week.</p>
             <div class="option-grid" data-name="goal">
-              <button type="button" class="option" data-value="muscle">Build Muscle</button>
-              <button type="button" class="option" data-value="strength">Get Stronger</button>
-              <button type="button" class="option" data-value="fitness">General Fitness</button>
-              <button type="button" class="option" data-value="fatloss">Lose Fat</button>
+              <button type="button" class="option blueprint" data-value="muscle"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Build Muscle</span><span class="opt-sub">8–12 REPS · VOLUME</span></button>
+              <button type="button" class="option blueprint" data-value="strength"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Get Stronger</span><span class="opt-sub">3–6 REPS · HEAVY</span></button>
+              <button type="button" class="option blueprint" data-value="fitness"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">General Fitness</span><span class="opt-sub">BALANCED</span></button>
+              <button type="button" class="option blueprint" data-value="fatloss"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Lose Fat</span><span class="opt-sub">DENSITY · SHORT REST</span></button>
             </div>
           </div>
-
-          <div class="form-group">
-            <label>Experience level</label>
-            <div class="option-grid" data-name="experience">
-              <button type="button" class="option" data-value="beginner">Beginner</button>
-              <button type="button" class="option" data-value="intermediate">Intermediate</button>
-              <button type="button" class="option" data-value="advanced">Advanced</button>
+          <div class="ob-step" data-step="1">
+            <h1>How long have you been lifting?</h1>
+            <p class="subtitle">Determines starting loads, set counts and how fast weight climbs.</p>
+            <div class="option-grid cols-1" data-name="experience">
+              <button type="button" class="option blueprint" data-value="beginner"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Beginner</span><span class="opt-sub">UNDER 1 YEAR · 3 SETS · 20 KG START</span></button>
+              <button type="button" class="option blueprint" data-value="intermediate"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Intermediate</span><span class="opt-sub">1–3 YEARS · 3 SETS · 40 KG START</span></button>
+              <button type="button" class="option blueprint" data-value="advanced"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Advanced</span><span class="opt-sub">3+ YEARS · 4 SETS · 60 KG START</span></button>
             </div>
           </div>
-
-          <div class="form-group">
-            <label>Where do you train?</label>
-            <div class="option-grid" data-name="equipment">
-              <button type="button" class="option" data-value="gym">Full Gym</button>
-              <button type="button" class="option" data-value="home">Home / Minimal</button>
-              <button type="button" class="option" data-value="mixed">Mixed</button>
+          <div class="ob-step" data-step="2">
+            <h1>Where do you train?</h1>
+            <p class="subtitle">Home swaps barbell and machine work for bodyweight and dumbbell variants.</p>
+            <div class="option-grid cols-1" data-name="equipment">
+              <button type="button" class="option blueprint" data-value="gym"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Full Gym</span><span class="opt-sub">RACKS · MACHINES · CABLES</span></button>
+              <button type="button" class="option blueprint" data-value="home"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Home / Minimal</span><span class="opt-sub">DUMBBELLS · BODYWEIGHT</span></button>
+              <button type="button" class="option blueprint" data-value="mixed"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Mixed</span><span class="opt-sub">GYM TEMPLATE · FLEXIBLE</span></button>
             </div>
           </div>
-
-          <div class="form-group">
-            <label>Days per week</label>
-            <div class="option-grid days" data-name="days">
-              <button type="button" class="option" data-value="3">3</button>
-              <button type="button" class="option" data-value="4">4</button>
-              <button type="button" class="option" data-value="5">5</button>
-              <button type="button" class="option" data-value="6">6</button>
+          <div class="ob-step" data-step="3">
+            <h1>Days per week</h1>
+            <p class="subtitle">Three is full body, four is upper/lower, five and six split by movement.</p>
+            <div class="option-grid" data-name="days">
+              <button type="button" class="option blueprint" data-value="3"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">3 days</span><span class="opt-sub">FULL BODY A / B / C</span></button>
+              <button type="button" class="option blueprint" data-value="4"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">4 days</span><span class="opt-sub">UPPER / LOWER ×2</span></button>
+              <button type="button" class="option blueprint" data-value="5"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">5 days</span><span class="opt-sub">PUSH / PULL / LEGS +2</span></button>
+              <button type="button" class="option blueprint" data-value="6"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">6 days</span><span class="opt-sub">PPL ×2</span></button>
             </div>
           </div>
-
-          <button type="submit" class="btn primary" id="generate-btn" disabled>Generate My Plan</button>
+          <div class="ob-nav">
+            <button type="button" class="btn btn-secondary" id="ob-back" style="display:none;">Back</button>
+            <button type="button" class="btn btn-primary" id="ob-next" disabled>Continue</button>
+            <button type="submit" class="btn btn-primary" id="generate-btn" style="display:none;" disabled>Generate plan</button>
+          </div>
         </form>
       </div>
     </section>
 
-    <!-- Dashboard Screen -->
+    <!-- Dashboard -->
     <section id="dashboard" class="screen">
-      <header class="topbar">
-        <div class="logo small">FORGE</div>
-        <nav>
-          <button class="nav-btn active" data-view="plan">Plan</button>
-          <button class="nav-btn" data-view="workout">Workout</button>
-          <button class="nav-btn" data-view="progress">Progress</button>
-          <button class="nav-btn" data-view="library">Library</button>
-        </nav>
-      </header>
-
-      <main class="container">
-        <!-- Plan View -->
-        <div id="view-plan" class="view active">
-          <div class="plan-header">
-            <div>
-              <h2 id="plan-title">Your Plan</h2>
+      <div class="dash-scroll">
+        <main class="container">
+          <!-- Plan -->
+          <div id="view-plan" class="view active">
+            <div class="view-header">
+              <div class="kicker" id="plan-kicker">PLAN</div>
+              <h1 id="plan-title">Your Plan</h1>
               <p id="plan-meta" class="meta"></p>
             </div>
-            <button class="btn secondary small" id="reset-plan">New Plan</button>
-          </div>
-
-          <div id="week-overview" class="week-grid"></div>
-
-          <div class="card tip">
-            <strong>How it works:</strong> Complete workouts in order. Weights auto-progress based on your performance. Miss a day? Just continue — the plan flexes with you.
-          </div>
-        </div>
-
-        <!-- Workout View -->
-        <div id="view-workout" class="view">
-          <div id="active-workout">
-            <h2 id="workout-title">Today's Workout</h2>
-            <p id="workout-subtitle" class="meta"></p>
-            <div id="exercise-list"></div>
-            <button class="btn primary full" id="finish-workout" style="display:none;">Finish Workout</button>
-          </div>
-          <div id="no-workout" class="empty-state" style="display:none;">
-            <p>No active workout. Go to Plan and start one.</p>
-          </div>
-        </div>
-
-        <!-- Progress View -->
-        <div id="view-progress" class="view">
-          <h2>Progress</h2>
-          <div class="stats-row">
-            <div class="stat-card">
-              <div class="stat-value" id="stat-workouts">0</div>
-              <div class="stat-label">Workouts</div>
+            <div class="stat-band" id="plan-stats">
+              <div><div class="stat-value" id="stat-week-done">0</div><div class="stat-label">Of <span id="stat-week-total">0</span> done</div></div>
+              <div><div class="stat-value" id="stat-streak">0</div><div class="stat-label">Week streak</div></div>
+              <div><div class="stat-value" id="stat-week-vol">0</div><span class="stat-unit" id="stat-week-unit">KG</span><div class="stat-label">This week</div></div>
             </div>
-            <div class="stat-card">
-              <div class="stat-value" id="stat-volume">0</div>
-              <div class="stat-label">Total Volume (kg)</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value" id="stat-prs">0</div>
-              <div class="stat-label">PRs</div>
+            <div class="section-label">The week</div>
+            <div id="week-overview" class="week-grid"></div>
+            <div class="card tip blueprint">
+              <i class="corner tl"></i><i class="corner br"></i>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>
+              <div>
+                <div class="tip-title">Auto-progression on</div>
+                <p>Every logged PR raises the next session's suggested load by 2.5%. Miss a day and the plan holds its place.</p>
+              </div>
             </div>
           </div>
-          <div class="card">
-            <h3>Recent Workouts</h3>
-            <div id="history-list"></div>
-          </div>
-          <div class="card">
-            <h3>Personal Records</h3>
-            <div id="pr-list"></div>
-          </div>
-        </div>
 
-        <!-- Library View -->
-        <div id="view-library" class="view">
-          <h2>Exercise Library</h2>
-          <div class="search-bar">
-            <input type="text" id="library-search" placeholder="Search exercises...">
+          <!-- Workout -->
+          <div id="view-workout" class="view">
+            <div id="active-workout">
+              <div class="wo-header">
+                <div class="wo-top">
+                  <div>
+                    <div class="kicker" id="workout-kicker">SESSION</div>
+                    <h1 id="workout-title">Today's Workout</h1>
+                    <p id="workout-subtitle" class="meta"></p>
+                  </div>
+                  <div class="wo-elapsed">
+                    <div class="clock" id="wo-elapsed">0:00</div>
+                    <div class="stat-label">Elapsed</div>
+                  </div>
+                </div>
+                <div class="wo-progress-row">
+                  <div class="wo-bar"><i id="wo-bar-fill" style="width:0%"></i></div>
+                  <span class="wo-count" id="wo-count">0 / 0</span>
+                </div>
+              </div>
+              <div id="exercise-list"></div>
+              <button class="btn btn-primary" id="finish-workout" style="display:none;">Finish workout</button>
+            </div>
+            <div id="no-workout" class="empty-state" style="display:none;">
+              <p>No active workout. Go to Plan and start one.</p>
+            </div>
           </div>
-          <div class="filter-row">
-            <button class="chip active" data-muscle="all">All</button>
-            <button class="chip" data-muscle="chest">Chest</button>
-            <button class="chip" data-muscle="back">Back</button>
-            <button class="chip" data-muscle="legs">Legs</button>
-            <button class="chip" data-muscle="shoulders">Shoulders</button>
-            <button class="chip" data-muscle="arms">Arms</button>
-            <button class="chip" data-muscle="core">Core</button>
+
+          <!-- Progress -->
+          <div id="view-progress" class="view">
+            <h1>Progress</h1>
+            <div class="stat-band">
+              <div><div class="stat-value" id="stat-workouts">0</div><div class="stat-label">Sessions</div></div>
+              <div><div class="stat-value" id="stat-volume">0</div><span class="stat-unit" id="stat-vol-unit">KG</span><div class="stat-label">Volume</div></div>
+              <div><div class="stat-value accent" id="stat-prs">0</div><div class="stat-label">Records</div></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-head">
+                <div class="section-label" style="margin:0">Weekly volume</div>
+                <div class="kicker" id="vol-trend">—</div>
+              </div>
+              <div class="chart-bars" id="volume-chart"></div>
+              <div class="chart-labels"><span id="bars-from">—</span><span id="bars-to">—</span></div>
+            </div>
+            <div class="section-label">Records</div>
+            <div class="list-frame" id="pr-list"></div>
+            <div class="section-label">History</div>
+            <div class="list-frame" id="history-list"></div>
           </div>
-          <div id="library-list" class="library-grid"></div>
-        </div>
-      </main>
+
+          <!-- Library -->
+          <div id="view-library" class="view">
+            <h1>Library</h1>
+            <div class="search-bar" id="search-wrap">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+              <input type="text" id="library-search" placeholder="Search 24 exercises" autocomplete="off">
+            </div>
+            <div class="filter-row">
+              <button class="chip active" data-muscle="all">All</button>
+              <button class="chip" data-muscle="chest">Chest</button>
+              <button class="chip" data-muscle="back">Back</button>
+              <button class="chip" data-muscle="legs">Legs</button>
+              <button class="chip" data-muscle="shoulders">Shoulders</button>
+              <button class="chip" data-muscle="arms">Arms</button>
+              <button class="chip" data-muscle="core">Core</button>
+            </div>
+            <div class="lib-count" id="lib-count">24 EXERCISES</div>
+            <div id="library-list" class="list-frame"></div>
+          </div>
+
+          <!-- Profile -->
+          <div id="view-profile" class="view">
+            <h1>Profile</h1>
+            <div class="profile-card blueprint">
+              <i class="corner tl"></i><i class="corner br"></i>
+              <div class="profile-avatar">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <div class="h2" style="margin:0">Athlete</div>
+                <div class="pr-meta" id="profile-line" style="margin-top:4px"></div>
+              </div>
+            </div>
+            <div class="section-label">Plan</div>
+            <div class="list-frame" id="profile-plan-rows"></div>
+            <div class="section-label">Units</div>
+            <div class="unit-toggle" id="unit-toggle">
+              <button type="button" data-unit="kg" class="on">KG</button>
+              <button type="button" data-unit="lb">LB</button>
+            </div>
+            <div class="section-label">Data</div>
+            <div class="list-frame">
+              <div class="setting-row"><span class="label">Stored on this device only</span><span class="value">LOCAL</span></div>
+              <div class="setting-row"><span class="label">Persistence key</span><span class="value">forge_state</span></div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-block" id="reset-plan" style="height:52px;">Build a new plan</button>
+            <p class="meta" style="margin-top:11px;font-size:12px;line-height:1.55">Clears the current week. History and records are kept.</p>
+          </div>
+        </main>
+      </div>
+
+      <nav class="bottom-nav" aria-label="Main">
+        <button class="nav-btn active" data-view="plan">
+          <svg viewBox="0 0 24 24"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="4" width="18" height="18" rx="0"/><path d="M3 10h18"/></svg>
+          <span>Plan</span>
+        </button>
+        <button class="nav-btn" data-view="workout">
+          <svg viewBox="0 0 24 24"><path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z"/><path d="m2.5 21.5 1.4-1.4"/><path d="m20.1 3.9 1.4-1.4"/><path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z"/><path d="m9.6 14.4 4.8-4.8"/></svg>
+          <span>Train</span>
+        </button>
+        <button class="nav-btn" data-view="progress">
+          <svg viewBox="0 0 24 24"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>
+          <span>Progress</span>
+        </button>
+        <button class="nav-btn" data-view="library">
+          <svg viewBox="0 0 24 24"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/></svg>
+          <span>Library</span>
+        </button>
+        <button class="nav-btn" data-view="profile">
+          <svg viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Profile</span>
+        </button>
+      </nav>
     </section>
   </div>
 
-  <!-- Exercise Detail Modal -->
+  <!-- Rest timer -->
+  <div id="rest-sheet" class="rest-sheet" aria-live="polite">
+    <div class="rest-inner">
+      <div class="rest-ring">
+        <svg width="64" height="64" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="29" fill="none" stroke="var(--color-divider)" stroke-width="2"></circle>
+          <circle id="rest-ring-arc" cx="32" cy="32" r="29" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-dasharray="182.2" stroke-dashoffset="0" transform="rotate(-90 32 32)"></circle>
+        </svg>
+        <div class="rest-clock" id="rest-clock">1:30</div>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="rest-title">Rest</div>
+        <div class="rest-next" id="rest-next">NEXT</div>
+      </div>
+      <button type="button" class="btn btn-secondary" id="skip-rest">Skip</button>
+    </div>
+  </div>
+
+  <!-- Session complete -->
+  <div id="session-complete">
+    <div class="complete-inner">
+      <div class="complete-kicker" id="complete-kicker">SESSION LOGGED</div>
+      <div class="complete-title">Nice work.</div>
+      <div class="complete-stats">
+        <div>
+          <div class="stat-value" id="complete-vol">0</div>
+          <div class="stat-label"><span id="complete-vol-unit">KG</span> volume</div>
+        </div>
+        <div>
+          <div class="stat-value" id="complete-sets">0</div>
+          <div class="stat-label">Sets logged</div>
+        </div>
+      </div>
+      <div id="complete-prs" class="complete-prs"></div>
+      <div class="complete-next" id="complete-next-wrap">
+        <div style="flex:1">
+          <div class="label">Next session</div>
+          <div class="name" id="complete-next">—</div>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <button type="button" class="complete-cta" id="complete-to-progress">See progress</button>
+      <button type="button" class="complete-back" id="complete-to-plan">Back to plan</button>
+    </div>
+  </div>
+
+  <!-- Exercise detail modal -->
   <div id="modal" class="modal">
     <div class="modal-content">
-      <button class="modal-close" id="modal-close">&times;</button>
-      <h2 id="modal-title"></h2>
-      <p id="modal-muscle" class="meta"></p>
-      <p id="modal-desc"></p>
-      <div class="form-cues">
-        <h4>Form Cues</h4>
-        <ul id="modal-cues"></ul>
+      <div class="modal-hero hatch" id="modal-hero">
+        <button type="button" class="btn btn-icon modal-close" id="modal-close" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <div class="hero-label">EXERCISE HERO · 16:9 · DROP IMAGE</div>
+      </div>
+      <div class="modal-body">
+        <div class="kicker" id="modal-muscle"></div>
+        <h2 id="modal-title" style="margin-bottom:12px"></h2>
+        <p id="modal-desc" class="subtitle" style="margin-bottom:20px"></p>
+        <div class="stat-band" style="margin-bottom:22px">
+          <div><div class="stat-value" style="font-size:18px" id="modal-pr">—</div><div class="stat-label">Your PR</div></div>
+          <div><div class="stat-value" style="font-size:18px;text-transform:uppercase" id="modal-group">—</div><div class="stat-label">Group</div></div>
+          <div><div class="stat-value" style="font-size:18px;text-transform:uppercase" id="modal-equip">—</div><div class="stat-label">Setup</div></div>
+        </div>
+        <div class="section-label">Form cues</div>
+        <div class="form-cues">
+          <div class="cue-list" id="modal-cues"></div>
+        </div>
       </div>
     </div>
   </div>
