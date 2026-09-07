@@ -4,8 +4,8 @@
   "description": "Personalized strength training plans that progress with you",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0f1115",
-  "theme_color": "#5b8def",
+  "background_color": "#f2f2f3",
+  "theme_color": "#5980a6",
   "orientation": "portrait-primary",
   "icons": [
     {
