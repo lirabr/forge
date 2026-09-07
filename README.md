@@ -1,5 +1,7 @@
 # Forge — Adaptive Strength Training
 
+**UI redesign reference:** see [`design/industry-redesign/`](design/industry-redesign/) (Industry design system handoff).
+
 Client-only progressive web app that builds a weekly strength plan from a short onboarding quiz, logs sets in the browser, and auto-progresses suggested weights from personal records.
 
 **Live files:** `index.html` · `app.js` · `styles.css` · `manifest.json` · `sw.js` · `icon-192.png` · `icon-512.png`
