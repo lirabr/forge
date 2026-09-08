@@ -651,6 +651,14 @@ h3 {
   font-size: 16px;
   color: color-mix(in srgb, var(--color-text) 35%, transparent);
 }
+.set-unit {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  min-width: 32px;
+}
 .set-readonly {
   flex: 1;
   font-family: var(--font-mono);
@@ -863,6 +871,12 @@ h3 {
   font-size: 15px;
   letter-spacing: 0.05em;
   color: var(--color-soft);
+}
+.data-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 8px;
 }
 
 /* Rest timer sheet */

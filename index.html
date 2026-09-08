@@ -52,9 +52,9 @@
             <h1>How long have you been lifting?</h1>
             <p class="subtitle">Determines starting loads, set counts and how fast weight climbs.</p>
             <div class="option-grid cols-1" data-name="experience">
-              <button type="button" class="option blueprint" data-value="beginner"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Beginner</span><span class="opt-sub">UNDER 1 YEAR · 3 SETS · 20 KG START</span></button>
-              <button type="button" class="option blueprint" data-value="intermediate"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Intermediate</span><span class="opt-sub">1–3 YEARS · 3 SETS · 40 KG START</span></button>
-              <button type="button" class="option blueprint" data-value="advanced"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Advanced</span><span class="opt-sub">3+ YEARS · 4 SETS · 60 KG START</span></button>
+              <button type="button" class="option blueprint" data-value="beginner"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Beginner</span><span class="opt-sub">UNDER 1 YEAR · CONSERVATIVE SEEDS PER LIFT</span></button>
+              <button type="button" class="option blueprint" data-value="intermediate"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Intermediate</span><span class="opt-sub">1–3 YEARS · WORKING WEIGHTS PER LIFT</span></button>
+              <button type="button" class="option blueprint" data-value="advanced"><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><span class="opt-label">Advanced</span><span class="opt-sub">3+ YEARS · HEAVIER SEEDS PER LIFT</span></button>
             </div>
           </div>
           <div class="ob-step" data-step="2">
@@ -98,7 +98,7 @@
             </div>
             <div class="stat-band" id="plan-stats">
               <div><div class="stat-value" id="stat-week-done">0</div><div class="stat-label">Of <span id="stat-week-total">0</span> done</div></div>
-              <div><div class="stat-value" id="stat-streak">0</div><div class="stat-label">Week streak</div></div>
+              <div><div class="stat-value" id="stat-streak">0</div><div class="stat-label">Day streak</div></div>
               <div><div class="stat-value" id="stat-week-vol">0</div><span class="stat-unit" id="stat-week-unit">KG</span><div class="stat-label">This week</div></div>
             </div>
             <div class="section-label">The week</div>
@@ -107,8 +107,8 @@
               <i class="corner tl"></i><i class="corner br"></i>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg>
               <div>
-                <div class="tip-title">Auto-progression on</div>
-                <p>Every logged PR raises the next session's suggested load by 2.5%. Miss a day and the plan holds its place.</p>
+                <div class="tip-title">Last session fills the next</div>
+                <p>Each lift starts from the last set you logged. Goal changes sets, reps and rest. Bodyweight and timed work never ask for kilograms.</p>
               </div>
             </div>
           </div>
@@ -208,8 +208,14 @@
               <div class="setting-row"><span class="label">Stored on this device only</span><span class="value">LOCAL</span></div>
               <div class="setting-row"><span class="label">Persistence key</span><span class="value">forge_state</span></div>
             </div>
+            <div class="data-actions">
+              <button type="button" class="btn btn-secondary btn-block" id="export-data">Export backup</button>
+              <button type="button" class="btn btn-secondary btn-block" id="import-data">Import backup</button>
+              <input type="file" id="import-file" accept="application/json,.json" hidden>
+            </div>
+            <p class="meta" style="margin-top:0;font-size:12px;line-height:1.55">JSON copy of this device's log. Import replaces current data. History and records survive a new plan.</p>
             <button type="button" class="btn btn-secondary btn-block" id="reset-plan" style="height:52px;">Build a new plan</button>
-            <p class="meta" style="margin-top:11px;font-size:12px;line-height:1.55">Clears the current week. History and records are kept.</p>
+            <p class="meta" style="margin-top:11px;font-size:12px;line-height:1.55">Clears the current week. History, records and last-session loads are kept.</p>
           </div>
         </main>
       </div>
@@ -261,7 +267,7 @@
   <div id="session-complete">
     <div class="complete-inner">
       <div class="complete-kicker" id="complete-kicker">SESSION LOGGED</div>
-      <div class="complete-title">Nice work.</div>
+      <div class="complete-title" id="complete-title">Nice work.</div>
       <div class="complete-stats">
         <div>
           <div class="stat-value" id="complete-vol">0</div>
@@ -311,6 +317,7 @@
     </div>
   </div>
 
+  <script src="logic.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

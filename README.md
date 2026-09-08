@@ -2,9 +2,9 @@
 
 **UI redesign reference:** see [`design/industry-redesign/`](design/industry-redesign/) (Industry design system handoff).
 
-Client-only progressive web app that builds a weekly strength plan from a short onboarding quiz, logs sets in the browser, and auto-progresses suggested weights from personal records.
+Client-only progressive web app that builds a weekly strength plan from a short onboarding quiz, logs sets in the browser, and fills the next session from the last logged set of each lift.
 
-**Live files:** `index.html` · `app.js` · `styles.css` · `manifest.json` · `sw.js` · `icon-192.png` · `icon-512.png`
+**Live files:** `index.html` · `logic.js` · `app.js` · `styles.css` · `manifest.json` · `sw.js` · `icon-192.png` · `icon-512.png`
 
 No backend, no build step, no dependencies. Open `index.html` or serve the folder over HTTPS (required for the service worker and “Add to Home Screen”).
 
@@ -14,48 +14,57 @@ python3 -m http.server 8080
 # then open http://localhost:8080
 ```
 
+Unit tests (Node 18+):
+
+```bash
+node --test tests/iteration1.test.cjs
+```
+
 Repo: https://github.com/lirabr/forge
 
 ---
 
 ## What it does
 
-1. **Onboarding** — goal, experience, equipment, days/week (3–6).
-2. **Plan** — generates a split (full body / upper-lower / PPL-style) and swaps gym lifts for home-friendly substitutes when equipment is `home`.
-3. **Workout** — tap a day, log weight × reps × done per set, finish to write history + PRs.
-4. **Progress** — workout count, total volume (kg), PR list.
+1. **Onboarding** — goal, experience, equipment, days/week (3–6). Goal changes sets, rep ranges and rest (muscle / strength / fitness / fat-loss).
+2. **Plan** — generates a split (full body / upper-lower / PPL-style) and swaps gym lifts for home-friendly substitutes when equipment is `home`. Week number advances when every day is logged.
+3. **Workout** — tap a day, log weight × reps (or reps-only / seconds for bodyweight and timed work). Suggested load is the last logged set of that lift, else a per-lift seed.
+4. **Progress** — workout count, weighted volume (kg), PR list, 8-week volume bars. Day streak is consecutive calendar days with a session.
 5. **Library** — 24 exercises with muscle filter, search, description, and form cues.
+6. **Profile** — kg/lb, JSON export/import of `forge_state`, rebuild plan (keeps history, PRs, last-session loads).
 
-State lives in `localStorage` under the key `forge_state`. Clearing site data resets the plan.
+State lives in `localStorage` under the key `forge_state`. Clearing site data resets the plan unless you imported a backup.
 
 ---
 
 ## Architecture
 
 ```
-index.html     screens + views (onboarding, plan, workout, progress, library) + modal
-app.js         exercise catalog, splits, plan generator, persistence, UI
-styles.css     dark theme, mobile-first, CSS variables
-manifest.json  PWA name, standalone display, theme #5b8def
-sw.js          cache-first service worker (forge-v1)
+index.html     screens + views (onboarding, plan, workout, progress, library, profile) + modal
+logic.js       catalog, splits, goal schemes, last-session fill, streak, week wrap, backup parse
+app.js         persistence and UI
+styles.css     Industry (light) theme, mobile-first, CSS variables
+manifest.json  PWA name, standalone display, theme #5980a6
+sw.js          cache-first service worker (forge-v3)
 ```
 
 ### Screens and views
 
-Two top-level screens (`#onboarding`, `#dashboard`). Dashboard has four views toggled by the top nav:
+Two top-level screens (`#onboarding`, `#dashboard`). Dashboard has five views toggled by the bottom nav:
 
 | View | DOM id | Role |
 | --- | --- | --- |
-| Plan | `#view-plan` | Week cards; start a session; reset plan |
-| Workout | `#view-workout` | Active session set logger |
+| Plan | `#view-plan` | Week cards; start a session |
+| Workout | `#view-workout` | Active session set logger + rest timer |
 | Progress | `#view-progress` | Stats, last 10 sessions, PRs |
 | Library | `#view-library` | Catalog + modal |
+| Profile | `#view-profile` | Units, backup, rebuild plan |
 
 `showScreen()` / `showView()` flip `.active` classes. Init on `DOMContentLoaded` restores a saved profile or shows onboarding.
 
-### Data model (`app.js`)
+### Data model (`logic.js`)
 
-**`EXERCISES`** — 24 movements. Each has `id`, `name`, `muscle` (`chest|back|legs|shoulders|arms|core`), `equipment` (`gym|home|mixed`), `desc`, `cues[]`.
+**`EXERCISES`** — 24 movements. Each has `id`, `name`, `muscle` (`chest|back|legs|shoulders|arms|core`), `equipment` (`gym|home|mixed`), `kind` (`weight|reps|timed`), `desc`, `cues[]`.
 
 **`SPLITS`** — keyed by days per week:
 
@@ -75,57 +84,62 @@ Two top-level screens (`#onboarding`, `#dashboard`). Dashboard has four views to
   profile: { goal, experience, equipment, days } | null,
   plan: [{ index, name, focus, completed, exercises: [...] }] | null,
   currentDayIndex: 0,
-  history: [{ date, name, focus, volume, dayIndex }],
-  prs: { [exerciseId]: { weight, reps, date, name } },
-  activeWorkout: { dayIndex, name, focus, exercises: [{ sets: [{ weight, reps, done }] }] } | null
+  weekNumber: 1,
+  history: [{ date, name, focus, volume, dayIndex, sets, exercises }],
+  prs: { [exerciseId]: { kind, weight, reps, seconds, date, name } },
+  lastSets: { [exerciseId]: { kind, weight, reps, seconds, date } },
+  activeWorkout: { dayIndex, name, focus, exercises: [{ sets: [{ weight, reps, seconds, done }] }] } | null,
+  unit: 'kg' | 'lb',
+  restSeconds: 45 | 90 | 150
 }
 ```
 
-`loadState()` / `saveState()` JSON-serialize the whole object.
+`loadState()` / `saveState()` JSON-serialize the whole object. Profile → Export backup / Import backup.
 
 ---
 
 ## Plan generation
 
-`generatePlan(profile)`:
+`generatePlan(profile)` in `logic.js`:
 
 1. Clone `SPLITS[days]` (fallback: 4-day).
 2. If home, remap exercise ids through `HOME_SUBS` and dedupe.
-3. Apply set/rep/start-weight scheme from experience:
+3. Apply set/rep/rest from **goal × experience**. Seeds are **per lift**, not a single start weight.
 
-| Experience | Sets | Target reps | Seed weight |
-| --- | --- | --- | --- |
-| Beginner | 3 | 8–12 | 20 kg |
-| Intermediate | 3 | 6–10 | 40 kg |
-| Advanced | 4 | 5–8 | 60 kg |
+| Goal | Rest | Intermediate scheme |
+| --- | --- | --- |
+| Muscle | 90s | 4 × 8–12 |
+| Strength | 150s | 4 × 4–6 (advanced: 5 × 3–5) |
+| Fat loss | 45s | 3 × 10–12 |
+| Fitness | 90s | 3 × 6–10 |
 
-Goal (`muscle`, `strength`, `fitness`, `fatloss`) is stored on the profile and shown in the plan title. It does **not** currently change exercise selection or volume — that is the main product gap if you want the plan to feel “adaptive” to the goal.
+Bodyweight lifts (`pushup`, `pullup`, `hanging`) log reps only. Planks log seconds.
 
 ---
 
-## Workout loop and progression
+## Workout loop and last-session fill
 
-- `startWorkout(dayIndex)` builds `activeWorkout` with one row per target set.
-- Suggested weight = last PR × **1.025** (~2.5%), else the seed weight from the scheme. Same seed is used for every lift of that experience level (bench and squat start at the same number).
+- `startWorkout(dayIndex)` builds `activeWorkout` with one row per target set. Re-tapping the same day resumes.
+- Suggested load = last logged working set of that lift (`state.lastSets`). Else the per-lift seed for experience.
 - Finish is enabled as soon as **any** set is checked.
 - `finishWorkout()`:
-  - marks the day `completed`
-  - volume = Σ (weight × reps) for checked sets with weight and reps
-  - PR if heavier, or same weight with more reps
-  - prepends history
-  - advances `currentDayIndex` to the next incomplete day, or wraps the week
-  - clears `activeWorkout`
+  - volume = Σ (weight × reps) for **weighted** checked sets only
+  - PR if heavier / more reps / longer hold depending on kind
+  - prepends history (including per-set payloads)
+  - if this finish completes every remaining day: reset `completed` flags, increment `weekNumber`, start at day 0
+  - otherwise advance to the next incomplete day
+  - writes `lastSets` for next time
 
-Reset plan (`#reset-plan`) clears profile/plan/active workout but **keeps** `history` and `prs`.
+Reset plan (`#reset-plan`) clears profile/plan/active workout but **keeps** `history`, `prs`, and `lastSets`.
 
 ---
 
 ## PWA
 
-- Manifest: standalone, portrait, dark background `#0f1115`, theme `#5b8def`.
-- Service worker caches the seven local assets on install, deletes old caches on activate, cache-first on fetch with a fallback to `index.html`.
+- Manifest: standalone, portrait, paper background `#f2f2f3`, theme `#5980a6`.
+- Service worker caches local assets on install, deletes old caches on activate, cache-first on fetch with a fallback to `index.html`.
 - Registered from `app.js` on `window.load`.
-- Bump `CACHE_NAME` in `sw.js` (`forge-v1` → `forge-v2`) after shipping asset changes, or users will keep stale JS/CSS.
+- Bump `CACHE_NAME` in `sw.js` (`forge-v3` → `forge-v4`) after shipping asset changes, or users will keep stale JS/CSS.
 
 Install: Chrome/Edge → Install app, or iOS Safari → Share → Add to Home Screen.
 
@@ -133,26 +147,20 @@ Install: Chrome/Edge → Install app, or iOS Safari → Share → Add to Home Sc
 
 ## Limitations (useful if you are extending it)
 
-- Single-user, device-local. No account, sync, or export.
-- Goal does not change programming; only experience + equipment + days do.
-- Starting weights are not lift-specific and ignore bodyweight movements (push-ups still get a kg field).
-- No rest timer, RPE, warmup sets, or deload logic.
-- Week completion does not reset `day.completed` flags — after a full cycle the next wrap still works via modulo, but cards stay marked complete.
-- `mixed` equipment uses the gym template as-is (no hybrid substitution).
-- Volume unit is labeled kg with no unit toggle.
+- Single-user, device-local. Backup is JSON export/import, not cloud sync.
+- Mixed equipment still uses the gym template as-is (no hybrid substitution).
+- No double-progression / deload yet — last session is copied, not auto-incremented.
+- No set tags (warmup / drop / fail), RPE, or plate calculator.
 - Service worker is cache-first; stale-client bugs are expected until the cache name changes.
 
 ---
 
 ## Suggested next work
 
-If you are collaborating on this repo, high-leverage follow-ups:
-
-1. Use `profile.goal` in `generatePlan` (hypertrophy volume vs strength intensity vs fat-loss density).
-2. Per-exercise default loads and a bodyweight path (reps-only, no kg).
-3. Reset `completed` when wrapping a new week; keep a week counter.
-4. Export / import `forge_state` JSON.
-5. Bump SW cache on release; consider network-first for `app.js`.
+1. Gym-floor logger: last-session ghost numbers, set tags, rest picker, plate math.
+2. Double progression with a “why this weight” line (hit top of range → +2.5 kg; miss twice → deload).
+3. Per-exercise charts + weekly sets/muscle heatmap.
+4. Shareable session recap card.
 
 ---
 
