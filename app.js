@@ -1,115 +1,8 @@
-// ========== DATA ==========
-const EXERCISES = [
-  { id: 'bp', name: 'Barbell Bench Press', muscle: 'chest', equipment: 'gym',
-    desc: 'Classic horizontal pressing movement for chest, shoulders and triceps.',
-    cues: ['Retract scapula and keep feet planted', 'Lower bar to mid-chest with control', 'Press up explosively without bouncing'] },
-  { id: 'dbp', name: 'Dumbbell Bench Press', muscle: 'chest', equipment: 'mixed',
-    desc: 'Allows greater range of motion and independent arm work.',
-    cues: ['Keep wrists stacked over elbows', 'Lower until slight stretch in chest', 'Press up and slightly inward'] },
-  { id: 'pushup', name: 'Push-Up', muscle: 'chest', equipment: 'home',
-    desc: 'Bodyweight staple that builds pressing strength anywhere.',
-    cues: ['Body in a straight line from head to heels', 'Elbows ~45° from torso', 'Full lockout at the top'] },
-  { id: 'ohp', name: 'Overhead Press', muscle: 'shoulders', equipment: 'gym',
-    desc: 'Vertical press for shoulder strength and stability.',
-    cues: ['Brace core hard', 'Bar path close to face', 'Lock out overhead with head through'] },
-  { id: 'db-ohp', name: 'Dumbbell Shoulder Press', muscle: 'shoulders', equipment: 'mixed',
-    desc: 'Seated or standing dumbbell press for balanced shoulder development.',
-    cues: ['Start with dumbbells at shoulder height', 'Press up without excessive lean', 'Control the descent'] },
-  { id: 'latpd', name: 'Lat Pulldown', muscle: 'back', equipment: 'gym',
-    desc: 'Vertical pulling for lats and upper back.',
-    cues: ['Pull elbows down and back', 'Slight lean back at bottom', 'Control the stretch at the top'] },
-  { id: 'pullup', name: 'Pull-Up', muscle: 'back', equipment: 'mixed',
-    desc: 'King of bodyweight pulling movements.',
-    cues: ['Full hang to start', 'Pull chest to bar', 'Avoid kipping unless training for it'] },
-  { id: 'row', name: 'Barbell Row', muscle: 'back', equipment: 'gym',
-    desc: 'Horizontal pull for thickness and posture.',
-    cues: ['Hinge at hips, flat back', 'Pull bar to lower chest/upper abs', 'Squeeze shoulder blades'] },
-  { id: 'db-row', name: 'Dumbbell Row', muscle: 'back', equipment: 'mixed',
-    desc: 'Unilateral row that fixes imbalances.',
-    cues: ['Support on bench', 'Pull elbow high', 'Keep torso stable'] },
-  { id: 'squat', name: 'Barbell Back Squat', muscle: 'legs', equipment: 'gym',
-    desc: 'Fundamental lower-body strength builder.',
-    cues: ['Brace before unrack', 'Break at hips and knees together', 'Drive through mid-foot'] },
-  { id: 'goblet', name: 'Goblet Squat', muscle: 'legs', equipment: 'mixed',
-    desc: 'Great teaching tool and home-friendly squat variation.',
-    cues: ['Hold weight at chest', 'Elbows inside knees at bottom', 'Upright torso'] },
-  { id: 'rdl', name: 'Romanian Deadlift', muscle: 'legs', equipment: 'gym',
-    desc: 'Posterior chain focus — hamstrings and glutes.',
-    cues: ['Soft knee bend', 'Push hips back', 'Feel stretch in hamstrings'] },
-  { id: 'lunges', name: 'Walking Lunges', muscle: 'legs', equipment: 'mixed',
-    desc: 'Unilateral leg work for strength and balance.',
-    cues: ['Long enough step', 'Front knee tracks over mid-foot', 'Upright torso'] },
-  { id: 'legpress', name: 'Leg Press', muscle: 'legs', equipment: 'gym',
-    desc: 'Machine-based quad and glute builder.',
-    cues: ['Feet mid-platform', 'Lower with control', 'Do not lock knees hard'] },
-  { id: 'curl', name: 'Barbell Curl', muscle: 'arms', equipment: 'gym',
-    desc: 'Classic biceps builder.',
-    cues: ['Elbows pinned to sides', 'No swinging', 'Full stretch at bottom'] },
-  { id: 'db-curl', name: 'Dumbbell Curl', muscle: 'arms', equipment: 'mixed',
-    desc: 'Allows natural wrist rotation (supination).',
-    cues: ['Start neutral or supinated', 'Control the eccentric', 'Squeeze at top'] },
-  { id: 'triceps', name: 'Triceps Pushdown', muscle: 'arms', equipment: 'gym',
-    desc: 'Isolation for the triceps.',
-    cues: ['Elbows fixed at sides', 'Full extension', 'Control the return'] },
-  { id: 'oh-ext', name: 'Overhead Triceps Extension', muscle: 'arms', equipment: 'mixed',
-    desc: 'Stretches the long head of the triceps.',
-    cues: ['Keep elbows pointed up', 'Lower behind head', 'Extend fully'] },
-  { id: 'plank', name: 'Plank', muscle: 'core', equipment: 'home',
-    desc: 'Isometric core stability.',
-    cues: ['Neutral spine', 'Squeeze glutes', 'Breathe steadily'] },
-  { id: 'crunch', name: 'Cable Crunch', muscle: 'core', equipment: 'gym',
-    desc: 'Loaded spinal flexion for abs.',
-    cues: ['Round the spine intentionally', 'Pull with abs not arms', 'Controlled tempo'] },
-  { id: 'hanging', name: 'Hanging Knee Raise', muscle: 'core', equipment: 'mixed',
-    desc: 'Dynamic core and hip flexor work.',
-    cues: ['Avoid swinging', 'Raise knees to chest', 'Control the lower'] },
-  { id: 'facepull', name: 'Face Pull', muscle: 'shoulders', equipment: 'gym',
-    desc: 'Rear delt and external rotation health movement.',
-    cues: ['Pull to face/forehead', 'Externally rotate at end', 'Squeeze rear delts'] },
-  { id: 'latraise', name: 'Lateral Raise', muscle: 'shoulders', equipment: 'mixed',
-    desc: 'Isolation for the side delts.',
-    cues: ['Slight elbow bend', 'Lead with elbows', 'Stop at shoulder height'] },
-  { id: 'hipthrust', name: 'Hip Thrust', muscle: 'legs', equipment: 'gym',
-    desc: 'Glute-focused hip extension.',
-    cues: ['Chin tucked', 'Drive through heels', 'Full hip extension and squeeze'] },
-];
-
-const SPLITS = {
-  3: [
-    { name: 'Full Body A', focus: 'Full Body', exercises: ['squat', 'bp', 'row', 'ohp', 'curl', 'plank'] },
-    { name: 'Full Body B', focus: 'Full Body', exercises: ['rdl', 'dbp', 'latpd', 'db-ohp', 'triceps', 'hanging'] },
-    { name: 'Full Body C', focus: 'Full Body', exercises: ['goblet', 'pushup', 'db-row', 'latraise', 'db-curl', 'plank'] },
-  ],
-  4: [
-    { name: 'Upper A', focus: 'Upper Body', exercises: ['bp', 'row', 'ohp', 'latpd', 'curl', 'triceps'] },
-    { name: 'Lower A', focus: 'Lower Body', exercises: ['squat', 'rdl', 'legpress', 'lunges', 'plank'] },
-    { name: 'Upper B', focus: 'Upper Body', exercises: ['dbp', 'db-row', 'db-ohp', 'facepull', 'db-curl', 'oh-ext'] },
-    { name: 'Lower B', focus: 'Lower Body', exercises: ['goblet', 'hipthrust', 'lunges', 'rdl', 'hanging'] },
-  ],
-  5: [
-    { name: 'Push', focus: 'Chest / Shoulders / Triceps', exercises: ['bp', 'ohp', 'dbp', 'latraise', 'triceps'] },
-    { name: 'Pull', focus: 'Back / Biceps', exercises: ['latpd', 'row', 'facepull', 'curl', 'db-curl'] },
-    { name: 'Legs', focus: 'Quads / Hamstrings / Glutes', exercises: ['squat', 'rdl', 'legpress', 'lunges', 'plank'] },
-    { name: 'Upper', focus: 'Upper Body', exercises: ['dbp', 'db-row', 'db-ohp', 'latpd', 'oh-ext'] },
-    { name: 'Lower + Core', focus: 'Legs + Core', exercises: ['goblet', 'hipthrust', 'rdl', 'hanging', 'crunch'] },
-  ],
-  6: [
-    { name: 'Push A', focus: 'Chest / Shoulders / Triceps', exercises: ['bp', 'ohp', 'latraise', 'triceps'] },
-    { name: 'Pull A', focus: 'Back / Biceps', exercises: ['latpd', 'row', 'facepull', 'curl'] },
-    { name: 'Legs A', focus: 'Quads / Glutes', exercises: ['squat', 'legpress', 'lunges', 'plank'] },
-    { name: 'Push B', focus: 'Chest / Shoulders / Triceps', exercises: ['dbp', 'db-ohp', 'latraise', 'oh-ext'] },
-    { name: 'Pull B', focus: 'Back / Biceps', exercises: ['pullup', 'db-row', 'facepull', 'db-curl'] },
-    { name: 'Legs B', focus: 'Hamstrings / Glutes', exercises: ['rdl', 'hipthrust', 'goblet', 'hanging'] },
-  ],
-};
-
-const HOME_SUBS = {
-  'bp': 'pushup', 'dbp': 'pushup', 'ohp': 'db-ohp', 'latpd': 'pullup',
-  'row': 'db-row', 'squat': 'goblet', 'legpress': 'goblet', 'triceps': 'oh-ext',
-  'crunch': 'plank', 'facepull': 'latraise'
-};
-
-const REST_SECONDS = 90;
+// ========== DATA (see logic.js) ==========
+const EXERCISES = ForgeLogic.EXERCISES;
+const SPLITS = ForgeLogic.SPLITS;
+const HOME_SUBS = ForgeLogic.HOME_SUBS;
+const REST_SECONDS = ForgeLogic.REST_SECONDS;
 const RING_CIRC = 182.2;
 const OB_LABELS = ['STEP 01 · GOAL', 'STEP 02 · EXPERIENCE', 'STEP 03 · EQUIPMENT', 'STEP 04 · DAYS'];
 
@@ -123,6 +16,8 @@ let state = {
   activeWorkout: null,
   unit: 'kg',
   restSeconds: REST_SECONDS,
+  weekNumber: 1,
+  lastSets: {},
 };
 
 let obStep = 0;
@@ -136,10 +31,7 @@ function loadState() {
   try {
     const raw = localStorage.getItem('forge_state');
     if (raw) {
-      const parsed = JSON.parse(raw);
-      state = { ...state, ...parsed };
-      if (!state.unit) state.unit = 'kg';
-      if (!state.restSeconds) state.restSeconds = REST_SECONDS;
+      state = ForgeLogic.parseBackup(raw);
     }
   } catch (e) {}
 }
@@ -172,39 +64,7 @@ function stepKg() {
 
 // ========== PLAN GENERATION ==========
 function generatePlan(profile) {
-  const days = parseInt(profile.days, 10);
-  let template = JSON.parse(JSON.stringify(SPLITS[days] || SPLITS[4]));
-
-  if (profile.equipment === 'home') {
-    template.forEach(day => {
-      day.exercises = day.exercises.map(id => HOME_SUBS[id] || id);
-      day.exercises = [...new Set(day.exercises)];
-    });
-  }
-
-  const scheme = {
-    beginner: { sets: 3, reps: '8-12', startWeight: 20 },
-    intermediate: { sets: 3, reps: '6-10', startWeight: 40 },
-    advanced: { sets: 4, reps: '5-8', startWeight: 60 },
-  }[profile.experience] || { sets: 3, reps: '8-12', startWeight: 30 };
-
-  return template.map((day, i) => ({
-    index: i,
-    name: day.name,
-    focus: day.focus,
-    completed: false,
-    exercises: day.exercises.map(id => {
-      const ex = EXERCISES.find(e => e.id === id) || { id, name: id };
-      return {
-        id: ex.id,
-        name: ex.name,
-        muscle: ex.muscle,
-        targetSets: scheme.sets,
-        targetReps: scheme.reps,
-        suggestedWeight: scheme.startWeight,
-      };
-    }),
-  }));
+  return ForgeLogic.generatePlan(profile);
 }
 
 // ========== UI HELPERS ==========
@@ -293,6 +153,8 @@ function initOnboarding() {
     state.plan = generatePlan(state.profile);
     state.currentDayIndex = 0;
     state.activeWorkout = null;
+    state.weekNumber = 1;
+    state.restSeconds = ForgeLogic.restForGoal(state.profile.goal);
     saveState();
     renderDashboard();
     showScreen('dashboard');
@@ -310,26 +172,22 @@ function primaryMuscle(day) {
 }
 
 function weekVolumeKg() {
-  const weekAgo = Date.now() - 7 * 24 * 3600 * 1000;
-  return state.history.reduce((sum, h) => {
-    const t = Date.parse(h.date);
-    if (!isNaN(t) && t >= weekAgo) return sum + (h.volume || 0);
-    // if date is YYYY-MM-DD compare as string week roughly: include recent history slice
-    return sum;
-  }, 0) || state.history.slice(0, state.plan ? state.plan.length : 4).reduce((s, h) => s + (h.volume || 0), 0);
+  return ForgeLogic.weekVolume(state.history, ForgeLogic.localDateKey(new Date()), 7);
 }
 
 function renderDashboard() {
   if (!state.plan) return;
   const p = state.profile;
+  const weekNo = String(state.weekNumber || 1).padStart(2, '0');
+  const rest = state.restSeconds || ForgeLogic.restForGoal(p.goal);
   $('#plan-kicker').textContent = `${(p.goal || '').toUpperCase()} · ${p.days} DAYS / WEEK`;
-  $('#plan-title').textContent = 'Your week';
-  $('#plan-meta').textContent = `${capitalize(p.experience)} · ${capitalize(p.equipment)} equipment · Auto-progressing`;
+  $('#plan-title').textContent = 'Week ' + weekNo;
+  $('#plan-meta').textContent = `${capitalize(p.experience)} · ${capitalize(p.equipment)} equipment · ${rest}s rest`;
 
   const done = state.plan.filter(d => d.completed).length;
   $('#stat-week-done').textContent = done;
   $('#stat-week-total').textContent = state.plan.length;
-  $('#stat-streak').textContent = done; // simple proxy
+  $('#stat-streak').textContent = ForgeLogic.computeDayStreak(state.history, ForgeLogic.localDateKey(new Date()));
   $('#stat-week-vol').textContent = fmtVol(weekVolumeKg());
   $('#stat-week-unit').textContent = unitLabel();
 
@@ -366,10 +224,60 @@ function renderDashboard() {
 }
 
 // ========== WORKOUT ==========
-function getSuggestedWeight(exId, fallback) {
-  const pr = state.prs[exId];
-  if (pr && pr.weight) return Math.round(pr.weight * 1.025 * 2) / 2;
-  return fallback;
+function exerciseKind(ex) {
+  if (ex && ex.kind) return ex.kind;
+  const cat = EXERCISES.find(e => e.id === (ex && ex.id));
+  return (cat && cat.kind) || 'weight';
+}
+
+function getSuggestedLoad(ex) {
+  const kind = exerciseKind(ex);
+  const hydrated = { ...ex, kind };
+  const experience = (state.profile && state.profile.experience) || 'beginner';
+  return ForgeLogic.suggestedLoad(hydrated, state.lastSets, experience);
+}
+
+function startWorkout(dayIndex) {
+  const day = state.plan[dayIndex];
+  if (!day) return;
+
+  if (state.activeWorkout && state.activeWorkout.dayIndex === dayIndex) {
+    renderActiveWorkout();
+    showView('workout');
+    startElapsed();
+    return;
+  }
+
+  state.currentDayIndex = dayIndex;
+  state.activeWorkout = {
+    dayIndex,
+    name: day.name,
+    focus: day.focus,
+    startedAt: Date.now(),
+    exercises: day.exercises.map(ex => {
+      const kind = exerciseKind(ex);
+      const load = getSuggestedLoad({ ...ex, kind });
+      return {
+        id: ex.id,
+        name: ex.name,
+        muscle: ex.muscle,
+        kind,
+        targetSets: ex.targetSets,
+        targetReps: ex.targetReps,
+        sets: Array.from({ length: ex.targetSets }, () => ({
+          weight: load.weight,
+          reps: load.reps,
+          seconds: load.seconds,
+          done: false,
+        })),
+      };
+    }),
+  };
+  saveState();
+  skipRest();
+  renderActiveWorkout();
+  showView('workout');
+  startElapsed();
 }
 
 function findActiveSet() {
@@ -404,42 +312,41 @@ function stopElapsed() {
   if (elapsedTimer) { clearInterval(elapsedTimer); elapsedTimer = null; }
 }
 
-function startWorkout(dayIndex) {
-  const day = state.plan[dayIndex];
-  if (!day) return;
-
-  state.currentDayIndex = dayIndex;
-  state.activeWorkout = {
-    dayIndex,
-    name: day.name,
-    focus: day.focus,
-    startedAt: Date.now(),
-    exercises: day.exercises.map(ex => ({
-      id: ex.id,
-      name: ex.name,
-      muscle: ex.muscle,
-      targetSets: ex.targetSets,
-      targetReps: ex.targetReps,
-      sets: Array.from({ length: ex.targetSets }, () => ({
-        weight: getSuggestedWeight(ex.id, ex.suggestedWeight),
-        reps: parseInt(ex.targetReps.split('-')[0], 10) || 8,
-        done: false,
-      })),
-    })),
-  };
-  saveState();
-  skipRest();
-  renderActiveWorkout();
-  showView('workout');
-  startElapsed();
-}
-
 function setDoneCount() {
   const aw = state.activeWorkout;
   if (!aw) return { done: 0, total: 0 };
   let done = 0, total = 0;
   aw.exercises.forEach(ex => ex.sets.forEach(s => { total++; if (s.done) done++; }));
   return { done, total };
+}
+
+function kindUnit(kind) {
+  if (kind === 'timed') return 'SEC';
+  if (kind === 'reps') return 'REPS';
+  return unitLabel();
+}
+
+function fmtSetReadout(s, kind) {
+  if (kind === 'timed') return (s.seconds || 0) + 's';
+  if (kind === 'reps') return (s.reps || 0) + ' REPS';
+  return fmtWeight(s.weight) + ' ' + unitLabel() + ' × ' + s.reps;
+}
+
+function stepperVal(s, kind) {
+  if (kind === 'timed') return String(s.seconds || 0);
+  if (kind === 'reps') return String(s.reps || 0);
+  return fmtWeight(s.weight);
+}
+
+function bumpSet(set, kind, dir) {
+  if (kind === 'timed') {
+    set.seconds = Math.max(5, (set.seconds || 0) + dir * 5);
+  } else if (kind === 'reps') {
+    set.reps = Math.max(1, (set.reps || 0) + dir);
+  } else {
+    const next = Math.round(((set.weight || 0) + dir * stepKg()) * 2) / 2;
+    set.weight = Math.max(0, next);
+  }
 }
 
 function renderActiveWorkout() {
@@ -467,6 +374,7 @@ function renderActiveWorkout() {
   list.innerHTML = '';
 
   aw.exercises.forEach((ex, ei) => {
+    const kind = exerciseKind(ex);
     const item = document.createElement('div');
     item.className = 'exercise-item' + (ex.sets.every(s => s.done) ? ' done' : '');
     const rows = ex.sets.map((s, si) => {
@@ -474,20 +382,22 @@ function renderActiveWorkout() {
       const isLogged = s.done;
       const cls = 'set-row' + (isActive ? ' active' : '') + (isLogged ? ' logged' : '');
       if (isActive) {
+        const extra = kind === 'weight'
+          ? `<span class="set-mul">×</span><button type="button" class="rep-btn" data-act="rep">${s.reps}</button>`
+          : `<span class="set-unit">${kindUnit(kind)}</span>`;
         return `
           <div class="${cls}" data-ei="${ei}" data-si="${si}">
             <span class="set-idx">${String(si + 1).padStart(2, '0')}</span>
             <div class="stepper">
-              <button type="button" data-act="dec" aria-label="Decrease weight">
+              <button type="button" data-act="dec" aria-label="Decrease">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/></svg>
               </button>
-              <span class="val">${fmtWeight(s.weight)}</span>
-              <button type="button" data-act="inc" aria-label="Increase weight">
+              <span class="val">${stepperVal(s, kind)}</span>
+              <button type="button" data-act="inc" aria-label="Increase">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
               </button>
             </div>
-            <span class="set-mul">×</span>
-            <button type="button" class="rep-btn" data-act="rep">${s.reps}</button>
+            ${extra}
             <button type="button" class="set-check" data-act="log" aria-label="Log set">
               <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
             </button>
@@ -496,7 +406,7 @@ function renderActiveWorkout() {
       return `
         <div class="${cls}" data-ei="${ei}" data-si="${si}">
           <span class="set-idx">${String(si + 1).padStart(2, '0')}</span>
-          <span class="set-readonly">${fmtWeight(s.weight)} ${unitLabel()} × ${s.reps}</span>
+          <span class="set-readonly">${fmtSetReadout(s, kind)}</span>
           <button type="button" class="set-check ${isLogged ? 'on' : ''}" data-act="toggle" aria-label="Toggle set">
             <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
           </button>
@@ -508,7 +418,7 @@ function renderActiveWorkout() {
         <div class="exercise-thumb ${hatchClass(ex.muscle)}"></div>
         <div style="flex:1;min-width:0">
           <div class="exercise-name" data-id="${ex.id}">${ex.name}</div>
-          <div class="exercise-meta">${ex.muscle} · ${ex.targetSets} × ${ex.targetReps} · ${unitLabel()}</div>
+          <div class="exercise-meta">${ex.muscle} · ${ex.targetSets} × ${ex.targetReps} · ${kindUnit(kind)}</div>
         </div>
       </div>
       ${rows}
@@ -527,17 +437,17 @@ function renderActiveWorkout() {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const act = btn.dataset.act;
-        const set = state.activeWorkout.exercises[ei].sets[si];
+        const ex = state.activeWorkout.exercises[ei];
+        const set = ex.sets[si];
+        const kind = exerciseKind(ex);
         if (act === 'inc') {
-          set.weight = Math.round((set.weight + stepKg()) * 2) / 2;
+          bumpSet(set, kind, 1);
           saveState(); renderActiveWorkout();
         } else if (act === 'dec') {
-          set.weight = Math.max(0, Math.round((set.weight - stepKg()) * 2) / 2);
+          bumpSet(set, kind, -1);
           saveState(); renderActiveWorkout();
         } else if (act === 'rep') {
-          let r = set.reps + 1;
-          if (r > 12) r = 5;
-          set.reps = r;
+          set.reps = ForgeLogic.cycleInRange(set.reps, ex.targetReps);
           saveState(); renderActiveWorkout();
         } else if (act === 'log') {
           set.done = true;
@@ -616,53 +526,74 @@ function finishWorkout() {
   skipRest();
   stopElapsed();
 
-  state.plan[aw.dayIndex].completed = true;
-
-  let volume = 0;
-  let setsLogged = 0;
-  const date = new Date().toISOString().slice(0, 10);
+  const date = ForgeLogic.localDateKey(new Date());
+  const stats = ForgeLogic.sessionStats(aw.exercises);
   const newPRs = [];
 
-  aw.exercises.forEach(ex => {
-    ex.sets.forEach(s => {
-      if (s.done && s.weight && s.reps) {
-        volume += s.weight * s.reps;
-        setsLogged += 1;
-        const current = state.prs[ex.id];
-        const isPR = !current || s.weight > current.weight || (s.weight === current.weight && s.reps > current.reps);
-        if (isPR) {
-          const prev = current ? current.weight : null;
-          state.prs[ex.id] = { weight: s.weight, reps: s.reps, date, name: ex.name };
-          newPRs.push({
-            name: ex.name,
-            weight: s.weight,
-            reps: s.reps,
-            prev,
-            delta: prev != null ? (s.weight - prev) : null,
-          });
-        }
-      }
-    });
+  stats.prCandidates.forEach((cand) => {
+    const current = state.prs[cand.id];
+    if (ForgeLogic.isNewPR(current, cand)) {
+      const prev = current || null;
+      state.prs[cand.id] = {
+        weight: cand.weight,
+        reps: cand.reps,
+        seconds: cand.seconds,
+        kind: cand.kind,
+        date,
+        name: cand.name,
+      };
+      newPRs.push({
+        name: cand.name,
+        kind: cand.kind,
+        weight: cand.weight,
+        reps: cand.reps,
+        seconds: cand.seconds,
+        prev,
+        delta: cand.kind === 'weight' && prev && prev.weight != null ? cand.weight - prev.weight : null,
+      });
+    }
   });
+
+  const mergedLast = { ...(state.lastSets || {}) };
+  Object.keys(stats.lastSets).forEach((id) => {
+    mergedLast[id] = { ...stats.lastSets[id], date };
+  });
+  state.lastSets = mergedLast;
+
+  const wrap = ForgeLogic.applySessionCompletion(state.plan, aw.dayIndex, state.weekNumber || 1);
+  const finishedWeek = wrap.wrapped ? (state.weekNumber || 1) : null;
+  state.plan = wrap.plan;
+  state.weekNumber = wrap.weekNumber;
+  state.currentDayIndex = wrap.currentDayIndex;
 
   state.history.unshift({
     date,
     name: aw.name,
     focus: aw.focus,
-    volume: Math.round(volume),
+    volume: Math.round(stats.volume),
     dayIndex: aw.dayIndex,
-    sets: setsLogged,
+    sets: stats.setsLogged,
+    weekNumber: finishedWeek || (wrap.wrapped ? wrap.weekNumber - 1 : state.weekNumber),
+    exercises: aw.exercises.map((ex) => ({
+      id: ex.id,
+      kind: exerciseKind(ex),
+      sets: ex.sets.filter((s) => s.done).map((s) => ({
+        weight: s.weight || 0,
+        reps: s.reps || 0,
+        seconds: s.seconds || 0,
+      })),
+    })),
   });
 
-  const next = state.plan.findIndex((d, i) => i > aw.dayIndex && !d.completed);
-  state.currentDayIndex = next >= 0 ? next : (aw.dayIndex + 1) % state.plan.length;
   const nextDay = state.plan[state.currentDayIndex];
-
   lastSessionSummary = {
     date,
-    volume: Math.round(volume),
-    sets: setsLogged,
+    volume: Math.round(stats.volume),
+    sets: stats.setsLogged,
     newPRs,
+    wrapped: wrap.wrapped,
+    finishedWeek,
+    weekNumber: state.weekNumber,
     nextName: nextDay ? nextDay.name : '—',
     nextFocus: nextDay ? nextDay.focus : '',
   };
@@ -672,10 +603,23 @@ function finishWorkout() {
   showSessionComplete();
 }
 
+function fmtPRLine(pr) {
+  if (!pr) return '—';
+  if (pr.kind === 'timed' || (pr.seconds && !pr.weight && !pr.reps)) return (pr.seconds || 0) + 's';
+  if (pr.kind === 'reps' || (!pr.weight && pr.reps && pr.kind !== 'weight')) return (pr.reps || 0) + ' reps';
+  return fmtWeight(pr.weight) + ' ' + unitLabel() + ' × ' + (pr.reps || 0);
+}
+
 function showSessionComplete() {
   const s = lastSessionSummary;
   if (!s) return;
-  $('#complete-kicker').textContent = `SESSION LOGGED · ${s.date}`;
+  if (s.wrapped) {
+    $('#complete-kicker').textContent = `WEEK ${String(s.finishedWeek).padStart(2, '0')} COMPLETE · ${s.date}`;
+    $('#complete-title').textContent = 'Week in the book.';
+  } else {
+    $('#complete-kicker').textContent = `SESSION LOGGED · ${s.date}`;
+    $('#complete-title').textContent = 'Nice work.';
+  }
   $('#complete-vol').textContent = fmtVol(s.volume);
   $('#complete-vol-unit').textContent = unitLabel();
   $('#complete-sets').textContent = s.sets;
@@ -685,21 +629,28 @@ function showSessionComplete() {
     prBox.innerHTML = '';
   } else {
     prBox.innerHTML = s.newPRs.map(pr => {
-      const delta = pr.delta != null ? ` · +${fmtWeight(pr.delta)} ${unitLabel()}` : ' · NEW';
-      const prev = pr.prev != null ? ` · PREVIOUS ${fmtWeight(pr.prev)} ${unitLabel()}` : '';
+      let extra = ' · NEW';
+      if (pr.kind === 'weight' && pr.delta != null) extra = ` · +${fmtWeight(pr.delta)} ${unitLabel()}`;
+      else if (pr.prev && pr.kind === 'reps') extra = ` · WAS ${pr.prev.reps} REPS`;
+      else if (pr.prev && pr.kind === 'timed') extra = ` · WAS ${pr.prev.seconds}s`;
+      else if (pr.prev && pr.kind === 'weight') extra = ` · PREVIOUS ${fmtWeight(pr.prev.weight)} ${unitLabel()}`;
       return `
         <div class="complete-pr blueprint">
           <i class="corner tl invert"></i><i class="corner br invert"></i>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2"/><path d="M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2"/><path d="M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/></svg>
           <div>
             <div class="name">${pr.name}</div>
-            <div class="detail">${fmtWeight(pr.weight)} ${unitLabel()} × ${pr.reps}${prev}${delta}</div>
+            <div class="detail">${fmtPRLine(pr)}${extra}</div>
           </div>
         </div>`;
     }).join('');
   }
 
-  $('#complete-next').textContent = s.nextName;
+  if (s.wrapped) {
+    $('#complete-next').textContent = 'Week ' + String(s.weekNumber).padStart(2, '0') + ' · ' + s.nextName;
+  } else {
+    $('#complete-next').textContent = s.nextName;
+  }
   $('#session-complete').classList.add('open');
 }
 
@@ -782,7 +733,7 @@ function renderProgress() {
     prList.innerHTML = '<p class="empty-msg">No personal records yet.</p>';
   } else {
     prList.innerHTML = prEntries
-      .sort((a, b) => b.weight - a.weight)
+      .sort((a, b) => (a.name || '').localeCompare(b.name || ''))
       .map(pr => {
         const ex = EXERCISES.find(e => e.id === pr.id);
         const muscle = ex ? ex.muscle : 'chest';
@@ -793,7 +744,7 @@ function renderProgress() {
               <div class="pr-name">${pr.name}</div>
               <div class="pr-meta">${pr.date}</div>
             </div>
-            <div class="pr-val">${fmtWeight(pr.weight)} ${unitLabel()} × ${pr.reps}</div>
+            <div class="pr-val">${fmtPRLine(pr)}</div>
           </div>`;
       }).join('');
   }
@@ -850,7 +801,7 @@ function openExerciseModal(id) {
   $('#modal-group').textContent = ex.muscle;
   $('#modal-equip').textContent = ex.equipment;
   const pr = state.prs[ex.id];
-  $('#modal-pr').textContent = pr ? `${fmtWeight(pr.weight)} ${unitLabel()}` : '—';
+  $('#modal-pr').textContent = fmtPRLine(pr ? { ...pr, kind: pr.kind || ex.kind } : null);
   $('#modal-cues').innerHTML = ex.cues.map((c, i) => `
     <div class="cue-row">
       <span class="cue-n">${String(i + 1).padStart(2, '0')}</span>
@@ -864,14 +815,17 @@ function openExerciseModal(id) {
 function renderProfile() {
   const p = state.profile;
   if (!p) return;
-  $('#profile-line').textContent = `${(p.goal || '').toUpperCase()} · ${(p.experience || '').toUpperCase()} · ${p.days} DAYS`;
+  $('#profile-line').textContent = `${(p.goal || '').toUpperCase()} · ${(p.experience || '').toUpperCase()} · ${p.days} DAYS · WEEK ${String(state.weekNumber || 1).padStart(2, '0')}`;
   const rest = state.restSeconds || REST_SECONDS;
+  const scheme = ForgeLogic.schemeFor(p);
   const rows = [
     { label: 'Goal', value: capitalize(p.goal) },
     { label: 'Experience', value: capitalize(p.experience) },
     { label: 'Equipment', value: capitalize(p.equipment) },
     { label: 'Days per week', value: p.days },
+    { label: 'Scheme', value: scheme.sets + ' × ' + scheme.reps },
     { label: 'Rest between sets', value: clock(rest) },
+    { label: 'Sessions logged', value: String(state.history.length) },
   ];
   $('#profile-plan-rows').innerHTML = rows.map(r => `
     <div class="setting-row">
@@ -883,6 +837,37 @@ function renderProfile() {
   $$('#unit-toggle button').forEach(b => {
     b.classList.toggle('on', b.dataset.unit === state.unit);
   });
+}
+
+function exportBackup() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'forge-backup-' + ForgeLogic.localDateKey(new Date()) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 500);
+}
+
+function importBackupText(text) {
+  const next = ForgeLogic.parseBackup(text);
+  state = next;
+  saveState();
+  skipRest();
+  stopElapsed();
+  if (state.profile && state.plan) {
+    renderDashboard();
+    showScreen('dashboard');
+    showView('profile');
+  } else {
+    selections = {};
+    obStep = 0;
+    $$('.option').forEach(o => o.classList.remove('selected'));
+    renderObStep();
+    showScreen('onboarding');
+  }
 }
 
 function setUnit(unit) {
@@ -916,6 +901,7 @@ function init() {
       state.plan = null;
       state.activeWorkout = null;
       state.currentDayIndex = 0;
+      state.weekNumber = 1;
       saveState();
       skipRest();
       stopElapsed();
@@ -926,6 +912,28 @@ function init() {
       showScreen('onboarding');
     }
   });
+
+  const exportBtn = $('#export-data');
+  if (exportBtn) exportBtn.addEventListener('click', exportBackup);
+  const importBtn = $('#import-data');
+  const importFile = $('#import-file');
+  if (importBtn && importFile) {
+    importBtn.addEventListener('click', () => importFile.click());
+    importFile.addEventListener('change', () => {
+      const file = importFile.files && importFile.files[0];
+      importFile.value = '';
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          importBackupText(String(reader.result || ''));
+        } catch (err) {
+          alert('That file is not a Forge backup.');
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
 
   $$('#unit-toggle button').forEach(b => {
     b.addEventListener('click', () => setUnit(b.dataset.unit));

@@ -1,0 +1,9 @@
+{
+  "name": "forge",
+  "private": true,
+  "description": "Adaptive strength training PWA",
+  "scripts": {
+    "test": "node --test tests/iteration1.test.cjs",
+    "start": "python3 -m http.server 8080 --bind 0.0.0.0"
+  }
+}

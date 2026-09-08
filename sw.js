@@ -1,8 +1,9 @@
-const CACHE_NAME = 'forge-v2';
+const CACHE_NAME = 'forge-v3';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
+  './logic.js',
   './app.js',
   './manifest.json',
   './icon-192.png',
